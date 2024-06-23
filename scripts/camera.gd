@@ -10,8 +10,11 @@ func update_zoom():
 
 func get_appropiate_zoom() -> Vector2:
 	var new_zoom: Vector2
-	if Global.grid_rows <= 5:
+	
+	if Global.grid_rows <= 4:
 		new_zoom = Vector2(1, 1)
+	elif Global.grid_rows <= 7:
+		new_zoom = Vector2(0.55, 0.55)
 	else:
-		new_zoom = Vector2(0.5, 0.5)
+		new_zoom = Vector2(0.45, 0.45)
 	return new_zoom

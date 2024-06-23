@@ -158,20 +158,19 @@ func _update_valid_tiles() -> void:
 	# pieces with special rules (pawn, knight) should overwrite this function
 	# gets called by grid as the global vars are set in it, so
 	# they don't have a value until the grid executes it's ready function
+	valid_tiles = []
 	
 	for dir in move_directions:
 		#assume it moves across the whole grid
-		for amount in max(Global.grid_columns, Global.grid_rows):
+		for amount in max(Global.grid_columns, Global.grid_rows)-1:
+			amount += 1
+			var new_pos = Vector2(position.x + (dir.x*amount), position.y + (dir.y*amount))
+			if not(is_valid_move(new_pos)): 
+				break
 			
-			var new_pos = position + dir*amount
-			
-			if (is_valid_move(new_pos)[1]): 
-				valid_tiles.append(new_pos)
-				continue
-		
-	
+			valid_tiles.append(new_pos)
 
-func is_valid_move(pos: Vector2) -> Array:
+func is_valid_move(pos: Vector2) -> bool:
 	#returns an array with the validity of the move (true or false) and
 	#a piece (or null) if the position is occupied by an enemy
 	#if tile is occupied by an enemy, stop calculating movement in that axis
@@ -180,22 +179,18 @@ func is_valid_move(pos: Vector2) -> Array:
 	var x = pos.x/Global.TILE_SIZE
 	
 	#out of range
-	if y < 0 or x < 0: return [false, null]
-	if y >= Global.grid_rows or x >= Global.grid_columns: return [false, null]
+	if y < 0 or x < 0: return false
+	if y >= Global.grid_rows or x >= Global.grid_columns: return false
 	
 	var pos_contents = Global.get_info_at_pos(pos)
 	
 	if (pos_contents[0].stops_movement) and not can_jump_over_obstacles:
-		return [false, null]
+		return false
 	
 	if (pos_contents[1] and pos_contents[1].stops_movement):
-		#a piece of the same colour is blocking the movement
-		if (pos_contents[1].colour == colour):
-			return [false, null]
-		#a piece of another colour is in the way
-		return [false, pos_contents[1]]
+		return false
 		
-	return [true, null]
+	return true
 
 
 func _on_eating(piece_eaten: Piece) -> void:
