@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2rhr11sfajvb"]
+
+[ext_resource type="PackedScene" uid="uid://bj2bih23nwha8" path="res://scenes/pieces/PieceTemplate.tscn" id="1_a55ne"]
+[ext_resource type="Script" path="res://scripts/pieces/piece_pawn.gd" id="2_43y4q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6msun"]
+resource_local_to_scene = true
+size = Vector2(256, 256)
+
+[node name="PiecePawn" instance=ExtResource("1_a55ne")]
+script = ExtResource("2_43y4q")
+piece_name = "pawn"
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_6msun")

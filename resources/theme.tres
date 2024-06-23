@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://wwo3tb8v7g34"]
+
+[ext_resource type="FontFile" uid="uid://rc53q64th436" path="res://fonts/PoetsenOne-Regular.ttf" id="1_3txi5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t4sj7"]
+bg_color = Color(0.215686, 0.207843, 0.321569, 0.784314)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 10
+
+[resource]
+default_font = ExtResource("1_3txi5")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_t4sj7")

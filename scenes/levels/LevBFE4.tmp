@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://dcmlyraojet72"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_tlmcr"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="2_j8l0e"]
+[ext_resource type="PackedScene" uid="uid://c12seqnnqdu42" path="res://scenes/LevelUI.tscn" id="2_k3err"]
+[ext_resource type="PackedScene" uid="uid://bpfmlr10l4a3c" path="res://scenes/Background.tscn" id="3_pfp64"]
+[ext_resource type="Script" path="res://scripts/grid.gd" id="4_3ung6"]
+[ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="5_t62qt"]
+[ext_resource type="Texture2D" uid="uid://csyiskanbsay5" path="res://sprites/ui/rounded_square.png" id="6_knkkr"]
+[ext_resource type="Texture2D" uid="uid://c7ylxekav7lbv" path="res://sprites/plain-square.png" id="7_cq0c8"]
+[ext_resource type="PackedScene" uid="uid://pdvs3j7qov1v" path="res://scenes/pieces/PieceRook.tscn" id="8_a14kk"]
+[ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="9_ctiip"]
+
+[node name="Level" type="Node2D" node_paths=PackedStringArray("objective_piece")]
+script = ExtResource("1_tlmcr")
+objective_piece = NodePath("Objective/PiecePawn")
+
+[node name="Objective" type="Node2D" parent="."]
+visible = false
+
+[node name="PiecePawn" parent="Objective" instance=ExtResource("2_j8l0e")]
+
+[node name="LevelUI" parent="." instance=ExtResource("2_k3err")]
+visible = false
+
+[node name="Background" parent="." instance=ExtResource("3_pfp64")]
+layer = -10
+visible = false
+added_dimness = Color(0.0980392, 0.0980392, 0.0980392, 0.392157)
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource("4_3ung6")
+tile_scene = ExtResource("5_t62qt")
+tile_texture = ExtResource("6_knkkr")
+bg_colour = Color(0.117647, 0.0470588, 0.0235294, 0)
+
+[node name="Pieces" type="Node2D" parent="Grid"]
+z_index = 4004
+
+[node name="PieceRook" parent="Grid/Pieces" instance=ExtResource("8_a14kk")]
+position = Vector2(256, 384)
+
+[node name="PieceRook2" parent="Grid/Pieces" instance=ExtResource("8_a14kk")]
+position = Vector2(256, 128)
+colour = "white"
+
+[node name="PieceRook3" parent="Grid/Pieces" instance=ExtResource("8_a14kk")]
+position = Vector2(512, 128)
+
+[node name="PieceBishop" parent="Grid/Pieces" instance=ExtResource("9_ctiip")]
+position = Vector2(0, 128)
+colour = "white"
+
+[node name="Tiles" type="Node2D" parent="Grid"]
+
+[node name="GridGuide" type="TextureRect" parent="Grid"]
+self_modulate = Color(0, 0, 0, 1)
+z_index = -10
+offset_right = 640.0
+offset_bottom = 640.0
+size_flags_vertical = 0
+texture = ExtResource("7_cq0c8")
+stretch_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]

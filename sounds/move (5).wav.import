@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cuwg1t6kbs8p8"
+path="res://.godot/imported/move (5).wav-e5538e2dd644be3be1f5abba95e11cd9.sample"
+
+[deps]
+
+source_file="res://sounds/move (5).wav"
+dest_files=["res://.godot/imported/move (5).wav-e5538e2dd644be3be1f5abba95e11cd9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

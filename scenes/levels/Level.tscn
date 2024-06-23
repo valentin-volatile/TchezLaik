@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://dcmlyraojet72"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_tlmcr"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="2_j8l0e"]
+[ext_resource type="PackedScene" uid="uid://c12seqnnqdu42" path="res://scenes/LevelUI.tscn" id="2_k3err"]
+[ext_resource type="PackedScene" uid="uid://bpfmlr10l4a3c" path="res://scenes/Background.tscn" id="3_pfp64"]
+[ext_resource type="Script" path="res://scripts/grid.gd" id="4_3ung6"]
+[ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="5_t62qt"]
+[ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="9_6fnj5"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="10_db16e"]
+[ext_resource type="Texture2D" uid="uid://cltffv3t57hl0" path="res://sprites/tiles/tile_700p.png" id="10_u445u"]
+
+[node name="Level" type="Node2D" node_paths=PackedStringArray("objective_piece")]
+script = ExtResource("1_tlmcr")
+objective_piece = NodePath("Objective/PiecePawn")
+
+[node name="Objective" type="Node2D" parent="."]
+process_mode = 4
+visible = false
+
+[node name="PiecePawn" parent="Objective" instance=ExtResource("2_j8l0e")]
+colour = "white"
+
+[node name="LevelUI" parent="." instance=ExtResource("2_k3err")]
+visible = false
+
+[node name="Background" parent="." instance=ExtResource("3_pfp64")]
+layer = -10
+visible = false
+added_dimness = Color(0.0980392, 0.0980392, 0.0980392, 0.392157)
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource("4_3ung6")
+debug_info = true
+rows = 2
+columns = 2
+tile_scene = ExtResource("5_t62qt")
+tile_texture = ExtResource("10_u445u")
+bg_margin = 50
+
+[node name="Pieces" type="Node2D" parent="Grid"]
+z_index = 4004
+
+[node name="Tiles" type="Node2D" parent="Grid"]
+
+[node name="GridGuide" type="TextureRect" parent="Grid"]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+z_index = -10
+offset_right = 1536.0
+offset_bottom = 1536.0
+size_flags_vertical = 0
+texture = ExtResource("9_6fnj5")
+stretch_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("10_db16e")
