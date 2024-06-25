@@ -112,7 +112,7 @@ func set_up_global_vars() -> void:
 
 func update_pieces() -> void:
 	for piece in pieces.get_children():
-		piece._update_valid_tiles()
+		piece.update_valid_tiles()
 
 
 func center() -> void:

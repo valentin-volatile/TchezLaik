@@ -46,11 +46,16 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_i28f4")
 theme_override_font_sizes/font_size = 36
-text = "Objective"
+text = "Moves left:"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="TextureRect" type="TextureRect" parent="MainContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Moves" type="Label" parent="MainContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-stretch_mode = 3
+theme_override_fonts/font = ExtResource("1_i28f4")
+theme_override_font_sizes/font_size = 36
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true

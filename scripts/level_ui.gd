@@ -1,11 +1,10 @@
 extends CanvasLayer
 
 @onready var main_container = $MainContainer
-@onready var objective_texture: TextureRect = $MainContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/TextureRect
+@onready var move_counter: Label = $MainContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Moves
 
 func _ready():
 	pass
 
-func update_sprite(piece: Piece) -> void:
-	objective_texture.texture = piece.sprite.texture
-	objective_texture.self_modulate = piece.modulate
+func update_counter(amount: int) -> void:
+	move_counter.text = str(amount)

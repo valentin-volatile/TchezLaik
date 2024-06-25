@@ -4,7 +4,7 @@ class_name Level
 signal piece_eaten(piece: Piece)
 signal finished
 
-@export var objective_piece: Piece
+@export var moves_amount: int = 5
 
 @onready var background = $Background
 @onready var ui = $LevelUI
@@ -25,14 +25,8 @@ func _ready():
 	
 	ui.visible = true
 	background.initializate()
+	ui.update_counter(moves_amount)
 	
-	#hide_objective_piece()
-	#
-	#func hide_objective_piece() -> void:
-	#objective_piece.visible = false
-	#objective_piece.selectable = false
-	
-	ui.update_sprite(objective_piece)
 	grid.tile_clicked.connect(on_tile_click)
 	grid.piece_clicked.connect(on_piece_click)
 	
@@ -60,13 +54,6 @@ func set_selected_piece(piece: Piece) -> void:
 		selected_piece = null
 		return
 	
-	# get rid of current selected piece if selecting it again
-	if selected_piece and selected_piece == piece:
-		selected_piece.set_selected(false)
-		highlight_piece_valid_tiles(false, selected_piece)
-		selected_piece = null
-		return
-	
 	#deselect current
 	if selected_piece:
 		selected_piece.set_selected(false)
@@ -79,9 +66,10 @@ func set_selected_piece(piece: Piece) -> void:
 
 
 func highlight_piece_valid_tiles(boolean: bool, piece: Piece) -> void:
-	var positions = piece.valid_tiles
+	for pos in piece.valid_tiles:
+		highlight_tile(boolean, pos)
 	
-	for pos in positions:
+	for pos in piece.capture_tiles:
 		highlight_tile(boolean, pos)
 
 
@@ -91,35 +79,32 @@ func highlight_tile(boolean: bool, pos: Vector2) -> void:
 
 func on_piece_click(piece: Piece) -> void:
 	if not can_play: return
-	
+	if not moves_amount: return
+
 	if not selected_piece:
-		piece.set_selected(true)
-		selected_piece = piece
+		set_selected_piece(piece)
 		return
 		
 	if (piece == selected_piece):
-		selected_piece = null;
-		piece.set_selected(false)
+		set_selected_piece(null)
 		return
 	
-	if (not piece.position in selected_piece.valid_tiles and piece.selectable and piece.moves_left):
-		selected_piece.set_selected(false)
-		piece.set_selected(true)
-		selected_piece = piece
-		return
-	
-	if piece.position in selected_piece.valid_tiles and piece.colour != selected_piece.colour:
-		piece._on_being_eaten(selected_piece)
-		selected_piece._on_eating(piece)
-		highlight_piece_valid_tiles(false, selected_piece)
-		move_piece_to_pos(selected_piece, piece.position)
-		highlight_piece_valid_tiles(true, selected_piece)
+	if piece.position in selected_piece.capture_tiles:
+		var current_piece = selected_piece
+		set_selected_piece(null)
+		current_piece.eat(piece)
+		update_move_counter()
 		piece_eaten.emit(piece)
+		return
+		
+	if (not piece.position in selected_piece.valid_tiles and piece.selectable):
+		set_selected_piece(piece)
 		return
 
 
 func on_tile_click(tile: Tile) -> void:
 	if not can_play: return
+	if not moves_amount: return
 	
 	#activate tile on click effect
 	
@@ -129,24 +114,18 @@ func on_tile_click(tile: Tile) -> void:
 	if Global.get_piece_at_pos(tile.position): return
 	
 	if (tile.position in selected_piece.valid_tiles):
-		move_piece_to_pos(selected_piece, tile.position)
+		var current_piece = selected_piece
+		set_selected_piece(null)
+		current_piece.move(tile.position)
+		update_move_counter()
 		return
 	
 	if not (tile.position in selected_piece.valid_tiles): 
 		set_selected_piece(null)
 
 
-func move_piece_to_pos(piece: Piece, pos: Vector2i) -> void:
-	# clear the piece from the spot the piece was on and set it on the new tile
-	Global.modify_matrix_piece_at_pos(piece.position, null)
-	Global.modify_matrix_piece_at_pos(pos, piece)
-	
-	piece.move(pos)
-
-
 func show_pieces(value: bool) -> void:
 	can_play = false
-	#idk if necessary, but won't it loop endlessly if I use the function?
 	var piece_array = pieces.get_children()
 	
 	for piece in piece_array:
@@ -159,14 +138,17 @@ func show_pieces(value: bool) -> void:
 	finished.emit()
 
 
+func update_move_counter() -> void:
+	moves_amount -= 1
+	ui.update_counter(moves_amount)
+
+
 func check_if_won() -> bool:
 	var pieces_left = pieces.get_children()
 	pieces_left.filter(func(piece): return piece.alive)
 	print(pieces_left)
 	if (pieces_left.size() > 1): return false
-	if (pieces_left[0].piece_name != objective_piece.piece_name): return false
-	if (pieces_left[0].colour != objective_piece.colour): return false
-#
+	
 	print("omg yu guon")
 	return true
 

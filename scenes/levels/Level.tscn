@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dcmlyraojet72"]
+[gd_scene load_steps=9 format=3 uid="uid://dcmlyraojet72"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_tlmcr"]
 [ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="2_j8l0e"]
@@ -6,13 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://bpfmlr10l4a3c" path="res://scenes/Background.tscn" id="3_pfp64"]
 [ext_resource type="Script" path="res://scripts/grid.gd" id="4_3ung6"]
 [ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="5_t62qt"]
-[ext_resource type="PackedScene" uid="uid://pdvs3j7qov1v" path="res://scenes/pieces/PieceRook.tscn" id="8_aq5vp"]
 [ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="9_6fnj5"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_db16e"]
 
-[node name="Level" type="Node2D" node_paths=PackedStringArray("objective_piece")]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_tlmcr")
-objective_piece = NodePath("Objective/PiecePawn")
 
 [node name="Objective" type="Node2D" parent="."]
 process_mode = 4
@@ -40,10 +38,6 @@ bg_margin = 15
 [node name="Pieces" type="Node2D" parent="Grid"]
 z_index = 4004
 
-[node name="PieceRook" parent="Grid/Pieces" instance=ExtResource("8_aq5vp")]
-position = Vector2(256, 768)
-colour = "white"
-
 [node name="Tiles" type="Node2D" parent="Grid"]
 
 [node name="GridGuide" type="TextureRect" parent="Grid"]
@@ -57,3 +51,4 @@ stretch_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("10_db16e")
+override_zoom = Vector2(0.75, 0.75)
