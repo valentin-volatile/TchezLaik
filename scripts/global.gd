@@ -7,17 +7,21 @@ const TILE_SIZE: int = 256
 #var colours = {"black": Color(0.741, 0.318, 0.424), "white": Color(0.322, 0.498, 0.722)}
 #var colours = {"black": Color(0.153, 0.153, 0.267, 1.0), "white": Color(0.984, 0.961, 0.937, 1.0)}
 
-#const PIECE_BLACK = Color(0.153, 0.153, 0.267, 1.0)
-#const PIECE_WHITE = Color(0.984, 0.961, 0.937, 1.0)
-#
-#const BOARD_DARK = Color(0.286, 0.302, 0.494)
-#const BOARD_LIGHT = Color(0.949, 0.827, 0.671)
+const TILE_COLOURS = {
+	"white": Color8(250,250,250,255),
+	"black": Color8(74,74,181,255)
+}
 
-const BOARD_LIGHT = Color(0.153, 0.153, 0.267, 1.0)
-const BOARD_DARK = Color(0.984, 0.961, 0.937, 1.0)
-
-const PIECE_WHITE = Color(0.949, 0.827, 0.671)
-const PIECE_BLACK = Color(0.286, 0.302, 0.494)
+const PIECE_COLOURS = {
+	"white": {
+		"light": Color8(233,198,175,255),
+		"medium": Color8(172,157,147,255),
+		"dark": Color8(145,124,111,255)}, 
+	"black": {
+		"light": Color8(128,128,128,255),
+		"medium": Color8(51,51,51,255),
+		"dark": Color8(0,0,0,255)}
+		}
 
 var grid_matrix: Array
 var grid_rows:int

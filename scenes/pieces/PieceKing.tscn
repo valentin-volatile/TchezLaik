@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxtscrtbaiqta"]
+
+[ext_resource type="PackedScene" uid="uid://bj2bih23nwha8" path="res://scenes/pieces/PieceTemplate.tscn" id="1_6o7y6"]
+[ext_resource type="Script" path="res://scripts/pieces/piece_king.gd" id="2_dioxo"]
+[ext_resource type="Texture2D" uid="uid://c2e6mitt7mgwm" path="res://sprites/pieces/King/King C.png" id="3_ryd86"]
+[ext_resource type="Texture2D" uid="uid://bkg3cyrcoa6wu" path="res://sprites/pieces/King/King B.png" id="4_n3k7k"]
+[ext_resource type="Texture2D" uid="uid://crfa38oowpvpb" path="res://sprites/pieces/King/King A.png" id="5_6xm0t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyt6y"]
+resource_local_to_scene = true
+size = Vector2(256, 256)
+
+[node name="PieceKing" instance=ExtResource("1_6o7y6")]
+script = ExtResource("2_dioxo")
+piece_name = "king"
+move_reach = 1
+eat_reach = 1
+
+[node name="Light" parent="Pivot" index="0"]
+texture = ExtResource("3_ryd86")
+
+[node name="Dark" parent="Pivot" index="1"]
+texture = ExtResource("4_n3k7k")
+
+[node name="Medium" parent="Pivot" index="2"]
+texture = ExtResource("5_6xm0t")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_pyt6y")

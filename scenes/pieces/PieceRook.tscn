@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://pdvs3j7qov1v"]
+[gd_scene load_steps=7 format=3 uid="uid://pdvs3j7qov1v"]
 
 [ext_resource type="PackedScene" uid="uid://bj2bih23nwha8" path="res://scenes/pieces/PieceTemplate.tscn" id="1_dtwgs"]
 [ext_resource type="Script" path="res://scripts/pieces/piece_rook.gd" id="2_lvh27"]
+[ext_resource type="Texture2D" uid="uid://c70inbb5hi510" path="res://sprites/pieces/Rook/Rook C.png" id="3_t0mii"]
+[ext_resource type="Texture2D" uid="uid://jawv1maga0h4" path="res://sprites/pieces/Rook/Rook B.png" id="4_y3cbu"]
+[ext_resource type="Texture2D" uid="uid://dclw2ec5s8dfl" path="res://sprites/pieces/Rook/Rook A.png" id="5_0g1d7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ihfo"]
 resource_local_to_scene = true
@@ -10,6 +13,15 @@ size = Vector2(256, 256)
 [node name="PieceRook" instance=ExtResource("1_dtwgs")]
 script = ExtResource("2_lvh27")
 piece_name = "rook"
+
+[node name="Light" parent="Pivot" index="0"]
+texture = ExtResource("3_t0mii")
+
+[node name="Dark" parent="Pivot" index="1"]
+texture = ExtResource("4_y3cbu")
+
+[node name="Medium" parent="Pivot" index="2"]
+texture = ExtResource("5_0g1d7")
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource("RectangleShape2D_3ihfo")

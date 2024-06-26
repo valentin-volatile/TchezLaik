@@ -10,9 +10,9 @@ signal was_clicked(tile:Tile)
 @onready var sprite = $Sprite
 
 
-var colour: Color
-var highlight_amount: float = 0.14
-var highlight_colour = Color(highlight_amount, highlight_amount, highlight_amount)
+var colour: String
+#var highlight_strength: int = 1
+#var highlight_colour = Color8(highlight_strength, highlight_strength, highlight_strength, 50)
 
 
 func show_debug_info(value: bool) -> void:
@@ -21,11 +21,16 @@ func show_debug_info(value: bool) -> void:
 
 
 func set_highlight(boolean: bool) -> void:
-	if boolean:
-		#sprite.self_modulate = colour + highlight_colour
-		sprite.self_modulate = Color.BLACK
+	if not boolean: 
+		sprite.self_modulate = Global.TILE_COLOURS[colour]
+		return
+	if colour == "white":
+		#sprite.self_modulate = Global.TILE_COLOURS[colour] - highlight_colour
+		sprite.self_modulate = Color.TAN
 	else:
-		sprite.self_modulate = colour
+		#sprite.self_modulate = Global.TILE_COLOURS[colour] - highlight_colour
+		sprite.self_modulate = Color.PERU
+
 
 
 func _on_area_2d_input_event(_viewport, _event, _shape_idx):
@@ -35,3 +40,8 @@ func _on_area_2d_input_event(_viewport, _event, _shape_idx):
 
 func _on_piece_step(piece: Piece) -> void:
 	prints(piece.colour, piece.piece_name, "stepped on me at", position)
+
+
+func update_colour(new_colour: String) -> void:
+	colour = new_colour
+	sprite.self_modulate = Global.TILE_COLOURS[colour]

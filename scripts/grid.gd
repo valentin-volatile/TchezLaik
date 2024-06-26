@@ -56,11 +56,8 @@ func generate_grid() -> void:
 		for column in columns:
 			var tile: Tile = tile_scene.instantiate()
 			add_child(tile)
-			
 			tile.sprite.texture = tile_texture
-			tile.colour = Global.BOARD_DARK if not((row + column -2)%2) else Global.BOARD_LIGHT
-			#bool to stop it from changing custom tiles? or make them have another sprite
-			tile.sprite.self_modulate = tile.colour
+			tile.update_colour("white" if ((row + column -2)%2) else "black")
 			tile.position = Vector2(Global.TILE_SIZE*column, Global.TILE_SIZE*row)
 			tile.show_debug_info(debug_info)
 			

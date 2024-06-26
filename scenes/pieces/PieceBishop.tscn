@@ -11,8 +11,5 @@ size = Vector2(256, 256)
 script = ExtResource("2_blabt")
 piece_name = "bishop"
 
-[node name="Sprite" parent="Pivot" index="0"]
-texture = null
-
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource("RectangleShape2D_cif0q")
