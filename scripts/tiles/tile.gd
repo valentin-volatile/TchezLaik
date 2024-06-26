@@ -32,14 +32,9 @@ func set_highlight(boolean: bool) -> void:
 		sprite.self_modulate = Color.PERU
 
 
-
 func _on_area_2d_input_event(_viewport, _event, _shape_idx):
 	if Input.is_action_just_pressed("left_click"):
 		was_clicked.emit(self)
-
-
-func _on_piece_step(piece: Piece) -> void:
-	prints(piece.colour, piece.piece_name, "stepped on me at", position)
 
 
 func update_colour(new_colour: String) -> void:

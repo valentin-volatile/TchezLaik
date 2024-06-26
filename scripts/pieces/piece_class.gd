@@ -69,7 +69,6 @@ func _on_area_2d_mouse_exited():
 
 
 func _set_up_directions():
-	#must be overriden
 	#move_directions = 
 	#eat_directions = 
 	pass
@@ -136,8 +135,8 @@ func move(pos: Vector2) -> void:
 	selectable = false
 	being_tweened = true
 	
-	Global.modify_matrix_piece_at_pos(position, null)
 	Global.modify_matrix_piece_at_pos(pos, self)
+	Global.modify_matrix_piece_at_pos(position, null)
 	
 	sprite_pivot.scale = Vector2(0.75, 0.75)
 	rotation_degrees = 0 if (position.x == pos.x) else -move_rotation * sign(position.x-pos.x) 

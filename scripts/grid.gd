@@ -71,6 +71,8 @@ func set_up_tiles() -> void:
 	for tile in tile_array:
 		var pos = tile.position
 		tile.was_clicked.connect(on_tile_click)
+		if not tile.sprite.texture: tile.sprite.texture = tile_texture
+		tile.update_colour(grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0].colour)
 		grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0].queue_free()
 		grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0] = tile
 
@@ -82,6 +84,7 @@ func set_up_pieces() -> void:
 		var pos = piece.position
 		grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][1] = piece
 		piece.was_clicked.connect(on_piece_click)
+		Global.pieces.append(piece)
 
 
 func set_up_grid_bg() -> void:

@@ -106,8 +106,6 @@ func on_tile_click(tile: Tile) -> void:
 	if not can_play: return
 	if not moves_amount: return
 	
-	#activate tile on click effect
-	
 	if not selected_piece: return
 	
 	#if there's a piece in the tile, let the piece handle the input

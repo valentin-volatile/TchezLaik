@@ -10,6 +10,8 @@ const TILE_SIZE: int = 256
 const TILE_COLOURS = {
 	"white": Color8(250,250,250,255),
 	"black": Color8(74,74,181,255)
+#highlight moving
+#highlight eating
 }
 
 const PIECE_COLOURS = {
@@ -23,15 +25,27 @@ const PIECE_COLOURS = {
 		"dark": Color8(0,0,0,255)}
 		}
 
+var pieces: Array
 var grid_matrix: Array
 var grid_rows:int
 var grid_columns: int
 
 
 func reset_vars() -> void:
+	pieces = []
 	grid_matrix = []
 	grid_rows = 0
 	grid_columns = 0
+
+
+func get_all_pieces() -> Array:
+	return pieces
+	
+func get_black_pieces() -> Array:
+	return pieces.filter(func(piece): return piece.colour == "black")
+
+func get_white_pieces() -> Array:
+	return pieces.filter(func(piece): return piece.colour == "white")
 
 func is_in_grid(pos: Vector2i) -> bool:
 	var x: int = pos.x/TILE_SIZE

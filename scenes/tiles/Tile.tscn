@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cxmu2x8p5w5id"]
 
-[ext_resource type="Script" path="res://scripts/tile.gd" id="1_4dq80"]
+[ext_resource type="Script" path="res://scripts/tiles/tile.gd" id="1_4dq80"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e40r4"]
 resource_local_to_scene = true
