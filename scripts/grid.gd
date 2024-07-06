@@ -21,7 +21,7 @@ signal piece_clicked(piece: Piece)
 @onready var tiles = $Tiles
 @onready var grid_guide = $GridGuide
 
-var highlight_colour := Color(highlight_amount, highlight_amount, highlight_amount, 0)
+#var highlight_colour := Color(highlight_amount, highlight_amount, highlight_amount, 0)
 var grid_matrix: Array
 # matrix that contains an array per position (with yet another array lol)
 # [][][0] = tile (base or custom)
@@ -69,22 +69,34 @@ func set_up_tiles() -> void:
 	var tile_array = tiles.get_children()
 	
 	for tile in tile_array:
-		var pos = tile.position
-		tile.was_clicked.connect(on_tile_click)
 		if not tile.sprite.texture: tile.sprite.texture = tile_texture
+		tile.was_clicked.connect(on_tile_click)
+
+		var pos = tile.position
 		tile.update_colour(grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0].colour)
 		grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0].queue_free()
-		grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0] = tile
-
+		Global.modify_matrix_tile_at_pos(pos, tile)
+		tile.show_debug_info(debug_info)
 
 func set_up_pieces() -> void:
 	var piece_array = pieces.get_children()
 	
 	for piece in piece_array:
-		var pos = piece.position
-		grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][1] = piece
-		piece.was_clicked.connect(on_piece_click)
-		Global.pieces.append(piece)
+		set_up_piece(piece)
+
+
+func set_up_piece(piece: Piece) -> void:
+	var pos = piece.position
+	grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][1] = piece
+	piece.was_clicked.connect(on_piece_click)
+	Global.pieces.append(piece)
+
+
+func add_piece(piece: Piece) -> void:
+# for pieces generated at run-time (not present when the level starts)
+	pieces.add_child(piece)
+	set_up_piece(piece)
+	piece.appear()
 
 
 func set_up_grid_bg() -> void:
@@ -105,6 +117,7 @@ func set_up_grid_bg() -> void:
 
 
 func set_up_global_vars() -> void:
+	Global.grid_node = self
 	Global.grid_matrix = grid_matrix
 	Global.grid_rows = rows
 	Global.grid_columns = columns

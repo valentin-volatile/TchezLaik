@@ -1,18 +1,18 @@
 [gd_scene load_steps=5 format=3 uid="uid://ck2uk6uiyrl2u"]
 
 [ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="1_owmpi"]
-[ext_resource type="Script" path="res://scripts/tiles/tile_colour_swapper.gd" id="2_nag7r"]
+[ext_resource type="Script" path="res://scripts/tiles/tile_colour_mixer.gd" id="2_nag7r"]
 [ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="2_xqjik"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f1cp1"]
 resource_local_to_scene = true
 size = Vector2(256, 256)
 
-[node name="TileColourSwapper" instance=ExtResource("1_owmpi")]
+[node name="TileColourMixer" instance=ExtResource("1_owmpi")]
 script = ExtResource("2_nag7r")
 activation_amount = 1
 
-[node name="TileBasic" type="Sprite2D" parent="." index="1"]
+[node name="CustomSprite" type="Sprite2D" parent="." index="1"]
 modulate = Color(1, 0.396078, 0.396078, 1)
 position = Vector2(128, 128)
 scale = Vector2(0.5, 0.5)

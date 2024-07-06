@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dcmlyraojet72"]
+[gd_scene load_steps=14 format=3 uid="uid://dcmlyraojet72"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_tlmcr"]
 [ext_resource type="PackedScene" uid="uid://c12seqnnqdu42" path="res://scenes/LevelUI.tscn" id="2_k3err"]
@@ -11,7 +11,8 @@
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_db16e"]
 [ext_resource type="PackedScene" uid="uid://bxtscrtbaiqta" path="res://scenes/pieces/PieceKing.tscn" id="10_x5kou"]
 [ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="10_xho0i"]
-[ext_resource type="PackedScene" uid="uid://ck2uk6uiyrl2u" path="res://scenes/tiles/TileColourSwapper.tscn" id="11_71ij4"]
+[ext_resource type="PackedScene" uid="uid://ck2uk6uiyrl2u" path="res://scenes/tiles/TileColourMixer.tscn" id="11_71ij4"]
+[ext_resource type="PackedScene" uid="uid://cdgruyigpftjo" path="res://scenes/tiles/TilePromotion.tscn" id="12_6w6c0"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_tlmcr")
@@ -62,8 +63,11 @@ position = Vector2(512, 768)
 [node name="Tiles" type="Node2D" parent="Grid"]
 z_index = 5
 
-[node name="TileColourSwapper" parent="Grid/Tiles" instance=ExtResource("11_71ij4")]
+[node name="TileColourMixer" parent="Grid/Tiles" instance=ExtResource("11_71ij4")]
 position = Vector2(256, 0)
+
+[node name="TilePromotion" parent="Grid/Tiles" instance=ExtResource("12_6w6c0")]
+position = Vector2(768, 256)
 
 [node name="GridGuide" type="TextureRect" parent="Grid"]
 self_modulate = Color(0, 0, 0, 1)

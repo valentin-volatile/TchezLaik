@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdgruyigpftjo"]
+
+[ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="1_028dt"]
+[ext_resource type="Script" path="res://scripts/tiles/tile_promotion.gd" id="2_h2utk"]
+[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="3_k30yc"]
+[ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="4_irs77"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s2vvv"]
+resource_local_to_scene = true
+size = Vector2(256, 256)
+
+[node name="TilePromotion" instance=ExtResource("1_028dt")]
+script = ExtResource("2_h2utk")
+piece_path = ExtResource("3_k30yc")
+activation_amount = 1
+
+[node name="TileBasic" type="Sprite2D" parent="." index="1"]
+modulate = Color(1, 0.560784, 1, 1)
+position = Vector2(128, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_irs77")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_s2vvv")

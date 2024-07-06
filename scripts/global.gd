@@ -26,6 +26,8 @@ const PIECE_COLOURS = {
 		}
 
 var pieces: Array
+
+var grid_node: Grid
 var grid_matrix: Array
 var grid_rows:int
 var grid_columns: int
@@ -36,16 +38,13 @@ func reset_vars() -> void:
 	grid_matrix = []
 	grid_rows = 0
 	grid_columns = 0
+	grid_node = null
 
-
-func get_all_pieces() -> Array:
+func get_pieces(colour: String = "") -> Array:
+	if colour:
+		return pieces.filter(func(piece): return piece.colour == colour)
 	return pieces
-	
-func get_black_pieces() -> Array:
-	return pieces.filter(func(piece): return piece.colour == "black")
 
-func get_white_pieces() -> Array:
-	return pieces.filter(func(piece): return piece.colour == "white")
 
 func is_in_grid(pos: Vector2i) -> bool:
 	var x: int = pos.x/TILE_SIZE

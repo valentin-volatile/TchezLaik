@@ -1,6 +1,7 @@
 extends Node2D
 class_name Piece
 
+signal finished_animation
 signal was_clicked(piece: Piece)
 
 @export var piece_name: String
@@ -25,7 +26,7 @@ var highlight_colour := Color(highlight_amount, highlight_amount, highlight_amou
 
 var move_directions := []
 var eat_directions := []
-var valid_tiles := []
+var move_tiles := []
 var capture_tiles := []
 var selectable := false
 var is_selected := false
@@ -110,17 +111,24 @@ func set_highlight(boolean: bool) -> void:
 	pass
 
 func appear() -> void:
+	sprite_pivot.visible = true
 	selectable = false
 	anim_player.play("appear")
+	
 	await anim_player.animation_finished
+	
 	selectable = true
+	finished_animation.emit()
 
 
 func disappear() -> void:
+	selectable = false
 	anim_player.play("disappear")
 	await anim_player.animation_finished
+	
 	selectable = false
 	visible = false
+	finished_animation.emit()
 
 
 func eat(piece: Piece) -> void:
@@ -151,6 +159,8 @@ func move(pos: Vector2) -> void:
 	update_valid_tiles()
 	being_tweened = false
 	selectable = true
+	
+	finished_animation.emit()
 
 
 func update_valid_tiles() -> void:
@@ -162,7 +172,7 @@ func _update_valid_moves() -> void:
 	# pieces with special rules (pawn, knight) should overwrite this function
 	# gets called by grid (as the global vars are set in it), so
 	# they don't have a value until the grid executes it's ready function
-	valid_tiles = []
+	move_tiles = []
 	
 	#necessary
 	var move_amount = (move_reach+1) if move_reach else max(Global.grid_columns, Global.grid_rows)
@@ -176,7 +186,7 @@ func _update_valid_moves() -> void:
 			if not(is_valid_move(new_pos)): 
 				break
 			
-			valid_tiles.append(new_pos)
+			move_tiles.append(new_pos)
 
 
 func _update_valid_captures() -> void:
@@ -196,11 +206,10 @@ func _update_valid_captures() -> void:
 			if not Global.is_in_grid(new_pos): break
 			var piece = Global.get_piece_at_pos(new_pos)
 			
-			if piece:
-				if piece.colour == colour: break
-				
-				capture_tiles.append(new_pos)
-				break
+			if piece and piece.colour == colour: break
+			
+			capture_tiles.append(new_pos)
+			break
 
 
 func is_valid_move(pos: Vector2) -> bool:

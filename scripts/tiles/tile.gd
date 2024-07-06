@@ -20,16 +20,17 @@ func show_debug_info(value: bool) -> void:
 	pos_label.visible = value
 
 
-func set_highlight(boolean: bool) -> void:
+func set_highlight(boolean: bool, capture_colour: bool) -> void:
 	if not boolean: 
 		sprite.self_modulate = Global.TILE_COLOURS[colour]
 		return
-	if colour == "white":
+	
+	if capture_colour:
 		#sprite.self_modulate = Global.TILE_COLOURS[colour] - highlight_colour
-		sprite.self_modulate = Color.TAN
+		sprite.self_modulate = Color.INDIAN_RED
 	else:
 		#sprite.self_modulate = Global.TILE_COLOURS[colour] - highlight_colour
-		sprite.self_modulate = Color.PERU
+		sprite.self_modulate = Color.SEA_GREEN
 
 
 func _on_area_2d_input_event(_viewport, _event, _shape_idx):

@@ -66,15 +66,19 @@ func set_selected_piece(piece: Piece) -> void:
 
 
 func highlight_piece_valid_tiles(boolean: bool, piece: Piece) -> void:
-	for pos in piece.valid_tiles:
-		highlight_tile(boolean, pos)
+	
+	for pos in piece.move_tiles:
+		highlight_tile(boolean, pos, false)
 	
 	for pos in piece.capture_tiles:
-		highlight_tile(boolean, pos)
+		var enemy_piece = Global.get_piece_at_pos(pos)
+		if enemy_piece and enemy_piece.colour != piece.colour:
+			highlight_tile(boolean, pos, true)
+		#else:
+			#highlight_tile(boolean, pos, false)
 
-
-func highlight_tile(boolean: bool, pos: Vector2) -> void:
-	Global.get_tile_at_pos(pos).set_highlight(boolean)
+func highlight_tile(boolean: bool, pos: Vector2, capture_colour: bool) -> void:
+	Global.get_tile_at_pos(pos).set_highlight(boolean, capture_colour)
 
 
 func on_piece_click(piece: Piece) -> void:
@@ -97,7 +101,7 @@ func on_piece_click(piece: Piece) -> void:
 		piece_eaten.emit(piece)
 		return
 		
-	if (not piece.position in selected_piece.valid_tiles and piece.selectable):
+	if (not piece.position in selected_piece.move_tiles and piece.selectable):
 		set_selected_piece(piece)
 		return
 
@@ -111,14 +115,14 @@ func on_tile_click(tile: Tile) -> void:
 	#if there's a piece in the tile, let the piece handle the input
 	if Global.get_piece_at_pos(tile.position): return
 	
-	if (tile.position in selected_piece.valid_tiles):
+	if (tile.position in selected_piece.move_tiles):
 		var current_piece = selected_piece
 		set_selected_piece(null)
 		current_piece.move(tile.position)
 		update_move_counter()
 		return
 	
-	if not (tile.position in selected_piece.valid_tiles): 
+	if not (tile.position in selected_piece.move_tiles): 
 		set_selected_piece(null)
 
 
