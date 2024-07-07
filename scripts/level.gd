@@ -2,7 +2,7 @@ extends Node2D
 class_name Level
 
 signal piece_eaten(piece: Piece)
-signal finished
+#signal finished
 
 @export var moves_amount: int = 5
 
@@ -125,6 +125,14 @@ func on_tile_click(tile: Tile) -> void:
 		set_selected_piece(null)
 
 
+func on_piece_started_animation() -> void:
+	can_play = false
+
+
+func on_piece_finished_animation() -> void:
+	can_play = true
+
+
 func show_pieces(value: bool) -> void:
 	can_play = false
 	var piece_array = pieces.get_children()
@@ -136,7 +144,7 @@ func show_pieces(value: bool) -> void:
 		else:
 			piece.disappear()
 	can_play = true
-	finished.emit()
+	#finished.emit()
 
 
 func update_move_counter() -> void:

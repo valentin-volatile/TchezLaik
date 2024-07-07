@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://bpfmlr10l4a3c" path="res://scenes/Background.tscn" id="3_pfp64"]
 [ext_resource type="Script" path="res://scripts/grid.gd" id="4_3ung6"]
 [ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="5_t62qt"]
+[ext_resource type="PackedScene" uid="uid://c2xm1y3ds60w8" path="res://scenes/pieces/PieceQueen.tscn" id="7_rg5y7"]
 [ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="9_6fnj5"]
+[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="9_nohm1"]
+[ext_resource type="PackedScene" uid="uid://bw6bxn2hh2ink" path="res://scenes/pieces/PieceUFO.tscn" id="10_82ds0"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_db16e"]
-[ext_resource type="PackedScene" uid="uid://bxtscrtbaiqta" path="res://scenes/pieces/PieceKing.tscn" id="10_x5kou"]
-[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="10_xho0i"]
-[ext_resource type="PackedScene" uid="uid://ck2uk6uiyrl2u" path="res://scenes/tiles/TileColourMixer.tscn" id="11_71ij4"]
 [ext_resource type="PackedScene" uid="uid://cdgruyigpftjo" path="res://scenes/tiles/TilePromotion.tscn" id="12_6w6c0"]
 
 [node name="Level" type="Node2D"]
@@ -34,18 +34,19 @@ bg_margin = 15
 [node name="Pieces" type="Node2D" parent="Grid"]
 z_index = 10
 
-[node name="PiecePawn" parent="Grid/Pieces" instance=ExtResource("10_xho0i")]
-position = Vector2(512, 1024)
+[node name="PieceUFO" parent="Grid/Pieces" instance=ExtResource("10_82ds0")]
+position = Vector2(768, 0)
+
+[node name="PieceQueen" parent="Grid/Pieces" instance=ExtResource("7_rg5y7")]
+position = Vector2(256, 0)
 colour = "white"
 
-[node name="PieceKing" parent="Grid/Pieces" instance=ExtResource("10_x5kou")]
+[node name="PieceKnight" parent="Grid/Pieces" instance=ExtResource("9_nohm1")]
 position = Vector2(512, 512)
+colour = "white"
 
 [node name="Tiles" type="Node2D" parent="Grid"]
 z_index = 5
-
-[node name="TileColourMixer" parent="Grid/Tiles" instance=ExtResource("11_71ij4")]
-position = Vector2(256, 0)
 
 [node name="TilePromotion" parent="Grid/Tiles" instance=ExtResource("12_6w6c0")]
 position = Vector2(768, 256)
@@ -62,3 +63,7 @@ stretch_mode = 1
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("10_db16e")
 override_zoom = Vector2(0.75, 0.75)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

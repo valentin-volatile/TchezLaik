@@ -6,8 +6,6 @@ func _on_step(trigger_piece: Piece) -> void:
 	if not activation_amount: return
 	activation_amount -= 1;
 	
-	print(activation_amount)
-	
 	await trigger_piece.finished_animation
 	
 	

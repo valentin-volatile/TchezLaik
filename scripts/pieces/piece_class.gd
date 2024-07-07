@@ -1,6 +1,7 @@
 extends Node2D
 class_name Piece
 
+signal started_animation
 signal finished_animation
 signal was_clicked(piece: Piece)
 
@@ -36,7 +37,7 @@ var alive := true
 
 # for tweening
 var move_time := 0.45 #0.3
-var move_rotation = 1
+var move_rotation = 5
 var being_tweened := false
 
 
@@ -44,7 +45,6 @@ func _ready():
 	sprite_pivot.visible = false
 	set_colour(colour, false)
 	_set_up_directions()
-	update_valid_tiles()
 	Global.grid_changed.connect(update_valid_tiles)
 
 
@@ -113,6 +113,7 @@ func set_highlight(boolean: bool) -> void:
 	pass
 
 func appear() -> void:
+	sprite_pivot.scale = Vector2.ZERO
 	sprite_pivot.visible = true
 	selectable = false
 	anim_player.play("appear")
@@ -120,7 +121,7 @@ func appear() -> void:
 	await anim_player.animation_finished
 	
 	selectable = true
-	finished_animation.emit()
+
 
 
 func disappear() -> void:
@@ -137,6 +138,7 @@ func eat(piece: Piece) -> void:
 	if moves_when_eating:
 		move(piece.position)
 	
+	Global.emit_grid_changed()
 	_on_eating(piece)
 	piece._on_being_eaten(self)
 
@@ -144,9 +146,13 @@ func eat(piece: Piece) -> void:
 func move(pos: Vector2) -> void:
 	selectable = false
 	being_tweened = true
-	
-	Global.modify_matrix_piece_at_pos(pos, self)
+
 	Global.modify_matrix_piece_at_pos(position, null)
+	Global.modify_matrix_piece_at_pos(pos, self)
+	
+	
+	#connected to level, blocks all input
+	started_animation.emit()
 	
 	sprite_pivot.scale = Vector2(0.75, 0.75)
 	rotation_degrees = 0 if (position.x == pos.x) else -move_rotation * sign(position.x-pos.x) 
@@ -158,12 +164,14 @@ func move(pos: Vector2) -> void:
 	await tween.finished
 	
 	position = pos
-	update_valid_tiles()
 	being_tweened = false
 	selectable = true
 	
+	
+	#connected to level, resumes input
+	Global.emit_grid_changed()
 	finished_animation.emit()
-
+	
 
 func update_valid_tiles() -> void:
 	_update_valid_captures()
@@ -201,10 +209,12 @@ func _update_valid_captures() -> void:
 	var eat_amount = (eat_reach+1) if eat_reach else max(Global.grid_columns, Global.grid_rows)
 	
 	for dir in eat_directions:
+		
 		for amount in eat_amount:
-			var new_pos = Vector2(position.x + (dir.x*amount), position.y + (dir.y*amount))
+			var new_pos = position + (dir*amount)
 			
 			if (new_pos == position): continue
+			
 			if not Global.is_in_grid(new_pos): break
 			
 			var piece = Global.get_piece_at_pos(new_pos)
@@ -216,8 +226,6 @@ func _update_valid_captures() -> void:
 			if piece.colour == colour: break
 			
 			capture_tiles.append(new_pos)
-			break
-
 
 
 func is_valid_move(pos: Vector2) -> bool:

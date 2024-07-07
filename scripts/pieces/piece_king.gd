@@ -12,9 +12,11 @@ func _set_up_directions() -> void:
 
 
 func _update_valid_moves() -> void:
+	if not Global.grid_matrix: return #avoid crash, as pieces are set up before the grid
+	
 	move_tiles = []
-	var attacked_tiles = Global.get_attacked_pos(colour)
-	print(attacked_tiles)
+	var attacked_tiles = Global.get_attacked_pos(self)
+
 	for dir in move_directions:
 		var new_pos = position + dir
 		

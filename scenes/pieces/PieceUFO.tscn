@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw6bxn2hh2ink"]
+
+[ext_resource type="PackedScene" uid="uid://bj2bih23nwha8" path="res://scenes/pieces/PieceTemplate.tscn" id="1_j5c0g"]
+[ext_resource type="Script" path="res://scripts/pieces/piece_ufo.gd" id="2_chaj5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w0x8k"]
+resource_local_to_scene = true
+size = Vector2(256, 256)
+
+[node name="PieceUFO" instance=ExtResource("1_j5c0g")]
+modulate = Color(0.486275, 1, 1, 1)
+script = ExtResource("2_chaj5")
+piece_name = "UFO"
+can_jump_over_obstacles = true
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_w0x8k")

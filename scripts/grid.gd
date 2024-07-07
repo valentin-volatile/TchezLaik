@@ -3,6 +3,9 @@ class_name Grid
 
 signal tile_clicked(tile: Tile)
 signal piece_clicked(piece: Piece)
+#for the level to stop/resume taking input
+signal piece_started_animation
+signal piece_finished_animation
 
 @export var debug_info: bool = false
 @export var rows: int = 5
@@ -37,7 +40,7 @@ func _ready():
 	set_up_pieces()
 	center()
 	
-	update_pieces()
+	Global.emit_grid_changed()
 
 
 func generate_grid() -> void:
@@ -88,6 +91,8 @@ func set_up_pieces() -> void:
 func set_up_piece(piece: Piece) -> void:
 	var pos = piece.position
 	grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][1] = piece
+	piece.started_animation.connect(on_piece_animation_start)
+	piece.finished_animation.connect(on_piece_animation_finish)
 	piece.was_clicked.connect(on_piece_click)
 	Global.pieces.append(piece)
 
@@ -97,6 +102,7 @@ func add_piece(piece: Piece) -> void:
 	pieces.add_child(piece)
 	set_up_piece(piece)
 	piece.appear()
+	piece.update_valid_tiles()
 
 
 func set_up_grid_bg() -> void:
@@ -123,11 +129,6 @@ func set_up_global_vars() -> void:
 	Global.grid_columns = columns
 
 
-func update_pieces() -> void:
-	for piece in pieces.get_children():
-		piece.update_valid_tiles()
-
-
 func center() -> void:
 	global_position = Vector2(-(Global.TILE_SIZE*columns)/2.0, -(Global.TILE_SIZE*rows)/2.0)
 
@@ -135,6 +136,11 @@ func center() -> void:
 func on_tile_click(tile: Tile) -> void:
 	tile_clicked.emit(tile)
 
-
 func on_piece_click(piece: Piece) -> void:
 	piece_clicked.emit(piece)
+
+func on_piece_animation_start() -> void:
+	piece_started_animation.emit()
+	
+func on_piece_animation_finish() -> void:
+	piece_finished_animation.emit()

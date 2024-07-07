@@ -47,15 +47,26 @@ func get_pieces(colour: String = "") -> Array:
 	return pieces
 
 
-func get_attacked_pos(colour: String) -> Array:
+func get_attacked_pos(piece: Piece) -> Array:
 	var pieces = get_pieces()
 	var attacked_pos = []
 	
-	for piece in pieces:
-		if piece.colour == colour: continue
+	# check for captures supossing this piece doesn't exist
+	grid_matrix[piece.position.y/TILE_SIZE][piece.position.x/TILE_SIZE][1] = null
+	
+	for enemy_piece in pieces:
+		if enemy_piece.colour == piece.colour: continue
 		
-		attacked_pos += piece.checked_tiles
-		
+		enemy_piece._update_valid_captures()
+		attacked_pos += enemy_piece.checked_tiles
+		attacked_pos += enemy_piece.capture_tiles
+	
+	# leave captures as they were
+	grid_matrix[piece.position.y/TILE_SIZE][piece.position.x/TILE_SIZE][1] = piece
+	for enemy_piece in pieces:
+		if enemy_piece.colour == piece.colour: continue
+		enemy_piece._update_valid_captures()
+	
 	return attacked_pos
 
 
@@ -78,8 +89,9 @@ func get_piece_at_pos(pos: Vector2) -> Piece:
 
 func modify_matrix_tile_at_pos(pos: Vector2i, tile: Tile) -> void:
 	grid_matrix[pos.y/TILE_SIZE][pos.x/TILE_SIZE][0] = tile
-	grid_changed.emit()
 	
 func modify_matrix_piece_at_pos(pos: Vector2i, piece: Piece) -> void:
 	grid_matrix[pos.y/TILE_SIZE][pos.x/TILE_SIZE][1] = piece
+
+func emit_grid_changed() -> void:
 	grid_changed.emit()
