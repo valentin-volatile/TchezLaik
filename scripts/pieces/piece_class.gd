@@ -21,6 +21,7 @@ signal was_clicked(piece: Piece)
 @onready var sprite_dark: Sprite2D = $Pivot/Dark
 @onready var sprite_medium: Sprite2D = $Pivot/Medium
 @onready var sprite_light: Sprite2D = $Pivot/Light
+@onready var audio_move: AudioStreamPlayer2D = $AudioMove
 
 var highlight_amount: float = 0.140
 var highlight_colour := Color(highlight_amount, highlight_amount, highlight_amount, 0)
@@ -162,6 +163,7 @@ func move(pos: Vector2) -> void:
 	tween.tween_property(sprite_pivot, "scale", Vector2(1, 1), move_time).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(self, "rotation", 0, move_time).set_trans(Tween.TRANS_ELASTIC)
 	await tween.finished
+	audio_move.play()
 	
 	position = pos
 	being_tweened = false
