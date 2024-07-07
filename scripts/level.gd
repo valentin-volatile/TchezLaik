@@ -74,8 +74,7 @@ func highlight_piece_valid_tiles(boolean: bool, piece: Piece) -> void:
 		var enemy_piece = Global.get_piece_at_pos(pos)
 		if enemy_piece and enemy_piece.colour != piece.colour:
 			highlight_tile(boolean, pos, true)
-		#else:
-			#highlight_tile(boolean, pos, false)
+
 
 func highlight_tile(boolean: bool, pos: Vector2, capture_colour: bool) -> void:
 	Global.get_tile_at_pos(pos).set_highlight(boolean, capture_colour)

@@ -202,14 +202,17 @@ func _update_valid_captures() -> void:
 			var new_pos = Vector2(position.x + (dir.x*amount), position.y + (dir.y*amount))
 			
 			if (new_pos == position): continue
-			
 			if not Global.is_in_grid(new_pos): break
+			
 			var piece = Global.get_piece_at_pos(new_pos)
 			
-			if piece and piece.colour == colour: break
+			if not piece: continue
+			
+			if piece.colour == colour: break
 			
 			capture_tiles.append(new_pos)
 			break
+
 
 
 func is_valid_move(pos: Vector2) -> bool:
