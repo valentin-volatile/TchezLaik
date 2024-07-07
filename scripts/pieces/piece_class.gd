@@ -28,6 +28,8 @@ var move_directions := []
 var eat_directions := []
 var move_tiles := []
 var capture_tiles := []
+#empty tiles this unit is putting in check (necessary for the ufo and king)
+var checked_tiles := []
 var selectable := false
 var is_selected := false
 var alive := true
@@ -194,6 +196,7 @@ func _update_valid_captures() -> void:
 	# gets called by grid (as the global vars are set in it), so
 	# they don't have a value until the grid executes it's ready function
 	capture_tiles = []
+	checked_tiles = []
 	
 	var eat_amount = (eat_reach+1) if eat_reach else max(Global.grid_columns, Global.grid_rows)
 	
@@ -206,7 +209,9 @@ func _update_valid_captures() -> void:
 			
 			var piece = Global.get_piece_at_pos(new_pos)
 			
-			if not piece: continue
+			if not piece: 
+				checked_tiles.append(new_pos)
+				continue
 			
 			if piece.colour == colour: break
 			

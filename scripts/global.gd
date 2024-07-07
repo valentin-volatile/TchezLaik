@@ -40,10 +40,23 @@ func reset_vars() -> void:
 	grid_columns = 0
 	grid_node = null
 
+
 func get_pieces(colour: String = "") -> Array:
 	if colour:
 		return pieces.filter(func(piece): return piece.colour == colour)
 	return pieces
+
+
+func get_attacked_pos(colour: String) -> Array:
+	var pieces = get_pieces()
+	var attacked_pos = []
+	
+	for piece in pieces:
+		if piece.colour == colour: continue
+		
+		attacked_pos += piece.checked_tiles
+		
+	return attacked_pos
 
 
 func is_in_grid(pos: Vector2i) -> bool:

@@ -1,13 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://dcmlyraojet72"]
+[gd_scene load_steps=12 format=3 uid="uid://dcmlyraojet72"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_tlmcr"]
 [ext_resource type="PackedScene" uid="uid://c12seqnnqdu42" path="res://scenes/LevelUI.tscn" id="2_k3err"]
 [ext_resource type="PackedScene" uid="uid://bpfmlr10l4a3c" path="res://scenes/Background.tscn" id="3_pfp64"]
 [ext_resource type="Script" path="res://scripts/grid.gd" id="4_3ung6"]
 [ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="5_t62qt"]
-[ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="7_ix200"]
-[ext_resource type="PackedScene" uid="uid://c2xm1y3ds60w8" path="res://scenes/pieces/PieceQueen.tscn" id="7_rg5y7"]
-[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="9_5fjl7"]
 [ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="9_6fnj5"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_db16e"]
 [ext_resource type="PackedScene" uid="uid://bxtscrtbaiqta" path="res://scenes/pieces/PieceKing.tscn" id="10_x5kou"]
@@ -36,23 +33,6 @@ bg_margin = 15
 
 [node name="Pieces" type="Node2D" parent="Grid"]
 z_index = 10
-
-[node name="PieceBishop" parent="Grid/Pieces" instance=ExtResource("7_ix200")]
-colour = "white"
-
-[node name="PieceBishop2" parent="Grid/Pieces" instance=ExtResource("7_ix200")]
-position = Vector2(1024, 1024)
-
-[node name="PieceQueen" parent="Grid/Pieces" instance=ExtResource("7_rg5y7")]
-position = Vector2(768, 768)
-colour = "white"
-
-[node name="PieceQueen2" parent="Grid/Pieces" instance=ExtResource("7_rg5y7")]
-position = Vector2(256, 768)
-
-[node name="PieceKnight" parent="Grid/Pieces" instance=ExtResource("9_5fjl7")]
-position = Vector2(768, 512)
-colour = "white"
 
 [node name="PiecePawn" parent="Grid/Pieces" instance=ExtResource("10_xho0i")]
 position = Vector2(512, 1024)
