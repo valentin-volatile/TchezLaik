@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dcmlyraojet72"]
+[gd_scene load_steps=15 format=3 uid="uid://dcmlyraojet72"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_tlmcr"]
 [ext_resource type="PackedScene" uid="uid://c12seqnnqdu42" path="res://scenes/LevelUI.tscn" id="2_k3err"]
@@ -7,8 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="5_t62qt"]
 [ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="7_ix200"]
 [ext_resource type="PackedScene" uid="uid://c2xm1y3ds60w8" path="res://scenes/pieces/PieceQueen.tscn" id="7_rg5y7"]
+[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="9_5fjl7"]
 [ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="9_6fnj5"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_db16e"]
+[ext_resource type="PackedScene" uid="uid://bxtscrtbaiqta" path="res://scenes/pieces/PieceKing.tscn" id="10_x5kou"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="10_xho0i"]
 [ext_resource type="PackedScene" uid="uid://ck2uk6uiyrl2u" path="res://scenes/tiles/TileColourMixer.tscn" id="11_71ij4"]
 [ext_resource type="PackedScene" uid="uid://cdgruyigpftjo" path="res://scenes/tiles/TilePromotion.tscn" id="12_6w6c0"]
 
@@ -46,6 +49,17 @@ colour = "white"
 
 [node name="PieceQueen2" parent="Grid/Pieces" instance=ExtResource("7_rg5y7")]
 position = Vector2(256, 768)
+
+[node name="PieceKnight" parent="Grid/Pieces" instance=ExtResource("9_5fjl7")]
+position = Vector2(768, 512)
+colour = "white"
+
+[node name="PiecePawn" parent="Grid/Pieces" instance=ExtResource("10_xho0i")]
+position = Vector2(512, 1024)
+colour = "white"
+
+[node name="PieceKing" parent="Grid/Pieces" instance=ExtResource("10_x5kou")]
+position = Vector2(512, 512)
 
 [node name="Tiles" type="Node2D" parent="Grid"]
 z_index = 5

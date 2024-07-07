@@ -27,10 +27,10 @@ func _update_valid_captures() -> void:
 	for dir in eat_directions:
 		var new_pos = position + dir
 		
-		if not Global.is_in_grid(new_pos): break
+		if not Global.is_in_grid(new_pos): continue
 		var piece = Global.get_piece_at_pos(new_pos)
 		
-		if piece and piece.colour == colour: break
-			
-		capture_tiles.append(new_pos)
-		break
+		if not piece: continue
+		
+		if piece.colour != colour:
+			capture_tiles.append(new_pos)
