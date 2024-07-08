@@ -81,6 +81,7 @@ func set_up_tiles() -> void:
 		Global.modify_matrix_tile_at_pos(pos, tile)
 		tile.show_debug_info(debug_info)
 
+
 func set_up_pieces() -> void:
 	var piece_array = pieces.get_children()
 	
@@ -102,7 +103,7 @@ func add_piece(piece: Piece) -> void:
 	pieces.add_child(piece)
 	set_up_piece(piece)
 	piece.appear()
-	piece.update_valid_tiles()
+	#piece.update_valid_tiles()
 
 
 func set_up_grid_bg() -> void:

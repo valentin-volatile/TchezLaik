@@ -1,7 +1,7 @@
 extends Node2D
 class_name Level
 
-signal piece_eaten(piece: Piece)
+signal piece_captured(piece: Piece)
 #signal finished
 
 @export var moves_amount: int = 5
@@ -47,6 +47,9 @@ func process_input() -> void:
 
 
 func set_selected_piece(piece: Piece) -> void:
+	if piece: piece.update_valid_tiles()
+	if selected_piece: selected_piece.update_valid_tiles()
+	
 	if not piece:
 		if selected_piece:
 			selected_piece.set_selected(false)
@@ -66,14 +69,16 @@ func set_selected_piece(piece: Piece) -> void:
 
 
 func highlight_piece_valid_tiles(boolean: bool, piece: Piece) -> void:
+	#for pos in piece.move_tiles:
+		#highlight_tile(boolean, pos, false)
+	#
+	#for pos in piece.capture_tiles:
+		#var enemy_piece = Global.get_piece_at_pos(pos)
+		#if enemy_piece and enemy_piece.colour != piece.colour:
+			#highlight_tile(boolean, pos, true)
 	
-	for pos in piece.move_tiles:
-		highlight_tile(boolean, pos, false)
-	
-	for pos in piece.capture_tiles:
-		var enemy_piece = Global.get_piece_at_pos(pos)
-		if enemy_piece and enemy_piece.colour != piece.colour:
-			highlight_tile(boolean, pos, true)
+	for pos in piece.checked_tiles:
+		highlight_tile(boolean, pos, true)
 
 
 func highlight_tile(boolean: bool, pos: Vector2, capture_colour: bool) -> void:
@@ -95,9 +100,9 @@ func on_piece_click(piece: Piece) -> void:
 	if piece.position in selected_piece.capture_tiles:
 		var current_piece = selected_piece
 		set_selected_piece(null)
-		current_piece.eat(piece)
+		current_piece.capture(piece)
 		update_move_counter()
-		piece_eaten.emit(piece)
+		piece_captured.emit(piece)
 		return
 		
 	if (not piece.position in selected_piece.move_tiles and piece.selectable):

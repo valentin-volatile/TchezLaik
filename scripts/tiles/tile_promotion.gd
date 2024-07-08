@@ -8,17 +8,13 @@ func _on_step(trigger_piece: Piece) -> void:
 	
 	await trigger_piece.finished_animation
 	
-	
 	var new_piece: Piece = piece_path.instantiate()
 	
 	new_piece.position = position
 	
 	trigger_piece.disappear()
-	
 	await trigger_piece.finished_animation
-	play_promotion_anim()
+	
 	Global.grid_node.add_piece(new_piece)
 	new_piece.set_colour(trigger_piece.colour)
 
-func play_promotion_anim() -> void:
-	pass

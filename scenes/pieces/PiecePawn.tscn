@@ -14,7 +14,8 @@ size = Vector2(256, 256)
 script = ExtResource("2_43y4q")
 piece_name = "pawn"
 move_reach = 2
-eat_reach = 1
+capture_reach = 1
+colour_affects_movement = true
 
 [node name="Light" parent="Pivot" index="0"]
 texture = ExtResource("3_hsbcm")

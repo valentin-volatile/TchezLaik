@@ -1,4 +1,4 @@
-extends Piece
+extends SafePiece
 class_name PieceKing
 
 func _set_up_directions() -> void:
@@ -6,22 +6,24 @@ func _set_up_directions() -> void:
 					Vector2(0, -Global.TILE_SIZE), Vector2(Global.TILE_SIZE, Global.TILE_SIZE), Vector2(-Global.TILE_SIZE, -Global.TILE_SIZE),
 					Vector2(-Global.TILE_SIZE, Global.TILE_SIZE), Vector2(Global.TILE_SIZE, -Global.TILE_SIZE)]
 	
-	eat_directions = [Vector2(Global.TILE_SIZE, 0), Vector2(-Global.TILE_SIZE, 0), Vector2(0, Global.TILE_SIZE), 
+	capture_directions = [Vector2(Global.TILE_SIZE, 0), Vector2(-Global.TILE_SIZE, 0), Vector2(0, Global.TILE_SIZE), 
 					Vector2(0, -Global.TILE_SIZE), Vector2(Global.TILE_SIZE, Global.TILE_SIZE), Vector2(-Global.TILE_SIZE, -Global.TILE_SIZE),
 					Vector2(-Global.TILE_SIZE, Global.TILE_SIZE), Vector2(Global.TILE_SIZE, -Global.TILE_SIZE)]
 
 
-func _update_valid_moves() -> void:
-	if not Global.grid_matrix: return #avoid crash, as pieces are set up before the grid
+func update_valid_tiles() -> void:
+	checked_tiles = []
+	_update_valid_captures()
+	_update_valid_moves()
 	
-	move_tiles = []
-	var attacked_tiles = Global.get_attacked_pos(self)
-
-	for dir in move_directions:
-		var new_pos = position + dir
-		
-		if not(is_valid_move(new_pos)): 
-			continue
-		
-		if not (new_pos in attacked_tiles):
-			move_tiles.append(new_pos)
+	var attack_tiles = Global.get_attacked_pos(self)
+	#copy, as arrays are passed by reference and cannot erase while iterating
+	var capture_tiles_copy = capture_tiles.duplicate()
+	var move_tiles_copy = move_tiles.duplicate()
+	
+	for move in capture_tiles_copy:
+		if move in attack_tiles: capture_tiles.erase(move)
+	
+	for move in move_tiles_copy:
+		if move in attack_tiles: move_tiles.erase(move)
+	

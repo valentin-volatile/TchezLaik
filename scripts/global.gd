@@ -63,6 +63,7 @@ func get_attacked_pos(piece: Piece) -> Array:
 	
 	# leave captures as they were
 	grid_matrix[piece.position.y/TILE_SIZE][piece.position.x/TILE_SIZE][1] = piece
+
 	for enemy_piece in pieces:
 		if enemy_piece.colour == piece.colour: continue
 		enemy_piece._update_valid_captures()

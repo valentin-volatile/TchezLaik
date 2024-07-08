@@ -9,7 +9,7 @@ func _set_up_directions():
 				Vector2(-Global.TILE_SIZE, Global.TILE_SIZE*2), Vector2(-Global.TILE_SIZE, -Global.TILE_SIZE*2)]
 	
 	move_directions = positions
-	eat_directions = positions
+	capture_directions = positions
 
 
 func _update_valid_moves() -> void:
@@ -23,9 +23,8 @@ func _update_valid_moves() -> void:
 
 func _update_valid_captures() -> void:
 	capture_tiles = []
-	checked_tiles = []
 	
-	for dir in eat_directions:
+	for dir in capture_directions:
 		var new_pos = position + dir
 		
 		if not Global.is_in_grid(new_pos): continue
@@ -37,3 +36,5 @@ func _update_valid_captures() -> void:
 		
 		if piece.colour != colour:
 			capture_tiles.append(new_pos)
+		
+		checked_tiles.append(new_pos)
