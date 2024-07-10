@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4ni0wlbmdpkg"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_n53af"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="2_682ek"]
+
+[node name="Level_5" instance=ExtResource("1_n53af")]
+moves_amount = 5
+
+[node name="PiecePawn" parent="Grid/Pieces" index="0" instance=ExtResource("2_682ek")]
+position = Vector2(256, 0)
+
+[node name="PiecePawn2" parent="Grid/Pieces" index="1" instance=ExtResource("2_682ek")]
+position = Vector2(768, 0)
+
+[node name="PiecePawn3" parent="Grid/Pieces" index="2" instance=ExtResource("2_682ek")]
+position = Vector2(0, 256)
+colour = "white"
+
+[node name="PiecePawn4" parent="Grid/Pieces" index="3" instance=ExtResource("2_682ek")]
+position = Vector2(512, 256)
+colour = "white"
+
+[node name="PiecePawn5" parent="Grid/Pieces" index="4" instance=ExtResource("2_682ek")]
+position = Vector2(1024, 512)
+colour = "white"
+
+[node name="GridGuide" parent="Grid" index="2"]
+offset_bottom = 1024.0

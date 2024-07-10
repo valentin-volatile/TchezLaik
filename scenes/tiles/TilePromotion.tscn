@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdgruyigpftjo"]
+[gd_scene load_steps=5 format=3 uid="uid://cdgruyigpftjo"]
 
 [ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="1_028dt"]
 [ext_resource type="Script" path="res://scripts/tiles/tile_promotion.gd" id="2_h2utk"]
-[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="3_k30yc"]
 [ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="4_irs77"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s2vvv"]
@@ -11,7 +10,9 @@ size = Vector2(256, 256)
 
 [node name="TilePromotion" instance=ExtResource("1_028dt")]
 script = ExtResource("2_h2utk")
-piece_path = ExtResource("3_k30yc")
+piece_path = null
+activates_on_step_on = true
+activates_on_step_off = false
 activation_amount = 1
 
 [node name="TileBasic" type="Sprite2D" parent="." index="1"]

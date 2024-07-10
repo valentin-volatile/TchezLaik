@@ -1,9 +1,6 @@
 extends TileOnStep
 
 func _on_step(trigger_piece: Piece) -> void:
-	if not activation_amount: return
-	activation_amount -= 1
-	
 	var pieces = Global.get_pieces()
 	
 	for piece in pieces:

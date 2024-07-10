@@ -1,10 +1,9 @@
 extends Node2D
 class_name Level
 
-signal piece_captured(piece: Piece)
 #signal finished
 
-@export var moves_amount: int = 5
+@export var moves_amount: int
 
 @onready var background = $Background
 @onready var ui = $LevelUI
@@ -12,21 +11,16 @@ signal piece_captured(piece: Piece)
 @onready var pieces = $Grid/Pieces
 @onready var camera = $Camera2D
 
-#[y][x]
-var grid_matrix: Array
-
 var selected_piece: Piece = null
 var can_play: bool = false #set in show_pieces
 
 
 func _ready():
-	#not a copy, arrays are shared by reference
-	grid_matrix = Global.grid_matrix
-	
 	ui.visible = true
 	background.initializate()
 	ui.update_counter(moves_amount)
 	
+	Global.piece_captured.connect(check_if_won)
 	grid.tile_clicked.connect(on_tile_click)
 	grid.piece_clicked.connect(on_piece_click)
 	
@@ -48,7 +42,6 @@ func process_input() -> void:
 
 func set_selected_piece(piece: Piece) -> void:
 	if piece: piece.update_valid_tiles()
-	if selected_piece: selected_piece.update_valid_tiles()
 	
 	if not piece:
 		if selected_piece:
@@ -69,16 +62,16 @@ func set_selected_piece(piece: Piece) -> void:
 
 
 func highlight_piece_valid_tiles(boolean: bool, piece: Piece) -> void:
-	#for pos in piece.move_tiles:
-		#highlight_tile(boolean, pos, false)
-	#
-	#for pos in piece.capture_tiles:
-		#var enemy_piece = Global.get_piece_at_pos(pos)
-		#if enemy_piece and enemy_piece.colour != piece.colour:
-			#highlight_tile(boolean, pos, true)
+	for pos in piece.move_tiles:
+		highlight_tile(boolean, pos, false)
 	
-	for pos in piece.checked_tiles:
-		highlight_tile(boolean, pos, true)
+	for pos in piece.capture_tiles:
+		var enemy_piece = Global.get_piece_at_pos(pos)
+		if enemy_piece and enemy_piece.colour != piece.colour:
+			highlight_tile(boolean, pos, true)
+	
+	#for pos in piece.checked_tiles:
+		#highlight_tile(boolean, pos, true)
 
 
 func highlight_tile(boolean: bool, pos: Vector2, capture_colour: bool) -> void:
@@ -101,8 +94,9 @@ func on_piece_click(piece: Piece) -> void:
 		var current_piece = selected_piece
 		set_selected_piece(null)
 		current_piece.capture(piece)
-		update_move_counter()
-		piece_captured.emit(piece)
+		if current_piece.moves_when_capturing: Global.emit_piece_moved(current_piece)
+		Global.emit_piece_captured(piece)
+		update_move_counter(-1)
 		return
 		
 	if (not piece.position in selected_piece.move_tiles and piece.selectable):
@@ -123,7 +117,8 @@ func on_tile_click(tile: Tile) -> void:
 		var current_piece = selected_piece
 		set_selected_piece(null)
 		current_piece.move(tile.position)
-		update_move_counter()
+		Global.emit_piece_moved(current_piece)
+		update_move_counter(-1)
 		return
 	
 	if not (tile.position in selected_piece.move_tiles): 
@@ -152,19 +147,15 @@ func show_pieces(value: bool) -> void:
 	#finished.emit()
 
 
-func update_move_counter() -> void:
-	moves_amount -= 1
+func update_move_counter(amount: int) -> void:
+	moves_amount += amount
 	ui.update_counter(moves_amount)
 
 
-func check_if_won() -> bool:
-	var pieces_left = pieces.get_children()
-	pieces_left.filter(func(piece): return piece.alive)
-	print(pieces_left)
-	if (pieces_left.size() > 1): return false
-	
+func check_if_won(_piece: Piece):
+	var pieces_left = Global.pieces.filter(func(piece): return piece.alive)
+	if (pieces_left.size() > 1): return
 	print("omg yu guon")
-	return true
 
 
 func restart_level() -> void:
@@ -175,15 +166,3 @@ func restart_level() -> void:
 	Global.reset_vars()
 	get_tree().reload_current_scene()
 
-
-#func modify_matrix_at_pos()(pos: Vector2, new_values: Array) -> void:
-	#assert(new_values.size() == 2, "The array should only contain [tile, piece]")
-	#grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0] = new_values[0]
-	#grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][1] = new_values[1]
-
-
-#func get_manhattan_distance(pos1: Vector2, pos2: Vector2) -> int:
-	#var x_amount = abs(pos1.x-pos2.x)
-	#var y_amount = abs(pos1.y-pos2.y)
-	#
-	#return (x_amount + y_amount)/Global.TILE_SIZE 

@@ -3,9 +3,6 @@ extends TileOnStep
 @export var piece_path: PackedScene
 
 func _on_step(trigger_piece: Piece) -> void:
-	if not activation_amount: return
-	activation_amount -= 1;
-	
 	await trigger_piece.finished_animation
 	
 	var new_piece: Piece = piece_path.instantiate()

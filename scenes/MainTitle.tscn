@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdomsp58cee7f"]
+
+[ext_resource type="Theme" uid="uid://wwo3tb8v7g34" path="res://resources/theme.tres" id="1_vkmse"]
+[ext_resource type="Texture2D" uid="uid://btvif5cqwhnhw" path="res://sprites/ui/particles.png" id="2_mnip4"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jalyf"]
+particles_animation = true
+particles_anim_h_frames = 6
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_lrtpj"]
+_data = [Vector2(0, 0.469767), 0.0, 0.0, 0, 0, Vector2(0.990979, 0.860465), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_p4t0a"]
+curve_y = SubResource("Curve_lrtpj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wlicf"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -200, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1000, 1, 1)
+angle_min = -720.0
+angle_max = 720.0
+angular_velocity_max = 50.0
+directional_velocity_min = 1.0
+directional_velocity_max = 720.0
+directional_velocity_curve = SubResource("CurveXYZTexture_p4t0a")
+gravity = Vector3(0, 80, 0)
+anim_offset_max = 1.0
+
+[node name="MainTitle" type="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -15
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.215686, 0.207843, 0.337255, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.901961)
+z_index = -10
+material = SubResource("CanvasItemMaterial_jalyf")
+position = Vector2(960, 0)
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_wlicf")
+texture = ExtResource("2_mnip4")
+lifetime = 6.0
+preprocess = 5.0
+
+[node name="BoxContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_vkmse")
+theme_override_font_sizes/font_size = 128
+text = "Tchez-Like"
+
+[node name="MarginContainer" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_vkmse")
+theme_override_font_sizes/font_size = 50
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_vkmse")
+theme_override_font_sizes/font_size = 50
+text = "Quit"

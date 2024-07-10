@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c12seqnnqdu42"]
+[gd_scene load_steps=7 format=3 uid="uid://c12seqnnqdu42"]
 
 [ext_resource type="FontFile" uid="uid://rc53q64th436" path="res://fonts/PoetsenOne-Regular.ttf" id="1_i28f4"]
 [ext_resource type="Script" path="res://scripts/level_ui.gd" id="1_rnibl"]
 [ext_resource type="Theme" uid="uid://wwo3tb8v7g34" path="res://resources/theme.tres" id="2_fx00p"]
+[ext_resource type="Shader" path="res://resources/shaders/transition.gdshader" id="4_smjob"]
+[ext_resource type="Texture2D" uid="uid://c81n11ijklmr5" path="res://sprites/ui/bg_pattern.png" id="4_vidsh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xgxhn"]
+shader = ExtResource("4_smjob")
+shader_parameter/percent_visible = 0.0
 
 [node name="LevelUI" type="CanvasLayer"]
 script = ExtResource("1_rnibl")
@@ -59,3 +65,17 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TransitionRect" type="TextureRect" parent="HBoxContainer"]
+material = SubResource("ShaderMaterial_xgxhn")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_vidsh")
+stretch_mode = 1

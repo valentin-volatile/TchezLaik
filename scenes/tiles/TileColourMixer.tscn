@@ -10,6 +10,8 @@ size = Vector2(256, 256)
 
 [node name="TileColourMixer" instance=ExtResource("1_owmpi")]
 script = ExtResource("2_nag7r")
+activates_on_step_on = true
+activates_on_step_off = false
 activation_amount = 1
 
 [node name="CustomSprite" type="Sprite2D" parent="." index="1"]

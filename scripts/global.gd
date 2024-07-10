@@ -1,6 +1,8 @@
 extends Node
 
 signal grid_changed
+signal piece_moved(piece: Piece)
+signal piece_captured(piece: Piece)
 
 const TILE_SIZE: int = 256
 
@@ -26,7 +28,6 @@ const PIECE_COLOURS = {
 		}
 
 var pieces: Array
-
 var grid_node: Grid
 var grid_matrix: Array
 var grid_rows:int
@@ -42,29 +43,36 @@ func reset_vars() -> void:
 
 
 func get_pieces(colour: String = "") -> Array:
+	#returns alive pieces of the specified colour
+	var pieces_array = pieces.duplicate()
+	
 	if colour:
-		return pieces.filter(func(piece): return piece.colour == colour)
-	return pieces
+		pieces_array = pieces_array.filter(func(piece): return piece.colour == colour)
+		
+	return pieces_array.filter(func(piece): return piece.alive)
 
 
 func get_attacked_pos(piece: Piece) -> Array:
-	var pieces = get_pieces()
+	var enemy_pieces = get_pieces()
 	var attacked_pos = []
 	
 	# check for captures supossing this piece doesn't exist
 	grid_matrix[piece.position.y/TILE_SIZE][piece.position.x/TILE_SIZE][1] = null
 	
-	for enemy_piece in pieces:
+	for enemy_piece in enemy_pieces:
 		if enemy_piece.colour == piece.colour: continue
 		
-		enemy_piece._update_valid_captures()
-		attacked_pos += enemy_piece.checked_tiles
-		attacked_pos += enemy_piece.capture_tiles
+		if enemy_piece is SafePiece: 
+			attacked_pos += enemy_piece._get_safe_piece_checked_tiles()
+		else:
+			enemy_piece.update_valid_tiles()
+			attacked_pos += enemy_piece.checked_tiles
+			attacked_pos += enemy_piece.capture_tiles
 	
 	# leave captures as they were
 	grid_matrix[piece.position.y/TILE_SIZE][piece.position.x/TILE_SIZE][1] = piece
 
-	for enemy_piece in pieces:
+	for enemy_piece in enemy_pieces:
 		if enemy_piece.colour == piece.colour: continue
 		enemy_piece._update_valid_captures()
 	
@@ -93,6 +101,12 @@ func modify_matrix_tile_at_pos(pos: Vector2i, tile: Tile) -> void:
 	
 func modify_matrix_piece_at_pos(pos: Vector2i, piece: Piece) -> void:
 	grid_matrix[pos.y/TILE_SIZE][pos.x/TILE_SIZE][1] = piece
+
+func emit_piece_moved(piece: Piece) -> void:
+	piece_moved.emit(piece)
+	
+func emit_piece_captured(piece: Piece) -> void:
+	piece_captured.emit(piece)
 
 func emit_grid_changed() -> void:
 	grid_changed.emit()

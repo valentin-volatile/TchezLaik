@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=3 uid="uid://bk3648xnwyan6"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_b277i"]
+[ext_resource type="PackedScene" uid="uid://bxtscrtbaiqta" path="res://scenes/pieces/PieceKing.tscn" id="2_isw7u"]
+[ext_resource type="PackedScene" uid="uid://pdvs3j7qov1v" path="res://scenes/pieces/PieceRook.tscn" id="3_veqql"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="4_ata86"]
+[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="5_lg8f2"]
+[ext_resource type="PackedScene" uid="uid://cdgruyigpftjo" path="res://scenes/tiles/TilePromotion.tscn" id="6_205xi"]
+[ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="7_f7gh0"]
+[ext_resource type="PackedScene" uid="uid://ck2uk6uiyrl2u" path="res://scenes/tiles/TileColourMixer.tscn" id="8_77go5"]
+
+[node name="Level_9" instance=ExtResource("1_b277i")]
+moves_amount = 6
+
+[node name="PieceKing" parent="Grid/Pieces" index="0" instance=ExtResource("2_isw7u")]
+position = Vector2(1024, 0)
+colour = "white"
+
+[node name="PieceRook" parent="Grid/Pieces" index="1" instance=ExtResource("3_veqql")]
+position = Vector2(768, 256)
+
+[node name="PiecePawn" parent="Grid/Pieces" index="2" instance=ExtResource("4_ata86")]
+position = Vector2(256, 512)
+
+[node name="PieceKnight" parent="Grid/Pieces" index="3" instance=ExtResource("5_lg8f2")]
+position = Vector2(512, 512)
+colour = "white"
+
+[node name="PiecePawn2" parent="Grid/Pieces" index="4" instance=ExtResource("4_ata86")]
+position = Vector2(0, 768)
+colour = "white"
+
+[node name="TilePromotion" parent="Grid/Tiles" index="0" instance=ExtResource("6_205xi")]
+position = Vector2(256, 1024)
+piece_path = ExtResource("7_f7gh0")
+
+[node name="TileColourMixer" parent="Grid/Tiles" index="1" instance=ExtResource("8_77go5")]
+position = Vector2(256, 0)

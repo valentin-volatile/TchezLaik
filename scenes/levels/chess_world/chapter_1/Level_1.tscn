@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2wg20t7i4gbb"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_ke416"]
+[ext_resource type="PackedScene" uid="uid://pdvs3j7qov1v" path="res://scenes/pieces/PieceRook.tscn" id="2_0lic5"]
+[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="3_nnyrd"]
+
+[node name="Level_1" instance=ExtResource("1_ke416")]
+moves_amount = 1
+
+[node name="Grid" parent="." index="2"]
+rows = 4
+columns = 4
+
+[node name="PieceRook" parent="Grid/Pieces" index="0" instance=ExtResource("2_0lic5")]
+colour = "white"
+
+[node name="PieceKnight" parent="Grid/Pieces" index="1" instance=ExtResource("3_nnyrd")]
+position = Vector2(768, 0)

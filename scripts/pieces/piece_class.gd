@@ -58,7 +58,7 @@ func _on_area_2d_input_event(_viewport, _event, _shape_idx):
 
 
 func _on_area_2d_mouse_entered():
-	if being_tweened: return
+	if not selectable or being_tweened: return
 	
 	if not is_selected:
 		set_highlight(true)
@@ -66,7 +66,7 @@ func _on_area_2d_mouse_entered():
 
 
 func _on_area_2d_mouse_exited():
-	if being_tweened: return
+	if not selectable or being_tweened: return
 	
 	if not is_selected:
 		set_highlight(false)

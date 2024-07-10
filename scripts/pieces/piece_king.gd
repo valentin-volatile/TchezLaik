@@ -21,7 +21,7 @@ func update_valid_tiles() -> void:
 	var capture_tiles_copy = capture_tiles.duplicate()
 	var move_tiles_copy = move_tiles.duplicate()
 	
-	for move in capture_tiles_copy:
+	for cap_move in capture_tiles_copy:
 		if move in attack_tiles: capture_tiles.erase(move)
 	
 	for move in move_tiles_copy:

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cr72ayj8322wy"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_g1vsv"]
+[ext_resource type="PackedScene" uid="uid://pdvs3j7qov1v" path="res://scenes/pieces/PieceRook.tscn" id="2_d0r3m"]
+[ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="3_0lda8"]
+[ext_resource type="PackedScene" uid="uid://ck2uk6uiyrl2u" path="res://scenes/tiles/TileColourMixer.tscn" id="4_f6sa5"]
+
+[node name="Level_2" instance=ExtResource("1_g1vsv")]
+moves_amount = 3
+
+[node name="Grid" parent="." index="2"]
+rows = 4
+columns = 4
+
+[node name="PieceRook" parent="Grid/Pieces" index="0" instance=ExtResource("2_d0r3m")]
+colour = "white"
+
+[node name="PieceBishop" parent="Grid/Pieces" index="1" instance=ExtResource("3_0lda8")]
+position = Vector2(512, 256)
+
+[node name="PieceRook2" parent="Grid/Pieces" index="2" instance=ExtResource("2_d0r3m")]
+position = Vector2(768, 768)
+colour = "white"
+
+[node name="TileColourMixer" parent="Grid/Tiles" index="0" instance=ExtResource("4_f6sa5")]
+position = Vector2(0, 768)

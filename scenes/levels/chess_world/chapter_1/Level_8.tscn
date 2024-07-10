@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpwj8urmfxh8w"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_unhtt"]
+[ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="2_cepch"]
+[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="3_c6gmn"]
+[ext_resource type="PackedScene" uid="uid://bxtscrtbaiqta" path="res://scenes/pieces/PieceKing.tscn" id="4_rnceh"]
+
+[node name="Level_8" instance=ExtResource("1_unhtt")]
+moves_amount = 4
+
+[node name="PieceBishop" parent="Grid/Pieces" index="0" instance=ExtResource("2_cepch")]
+position = Vector2(768, 0)
+colour = "white"
+
+[node name="PieceKnight" parent="Grid/Pieces" index="1" instance=ExtResource("3_c6gmn")]
+position = Vector2(1024, 1024)
+colour = "white"
+
+[node name="PieceKing" parent="Grid/Pieces" index="2" instance=ExtResource("4_rnceh")]
+position = Vector2(256, 768)

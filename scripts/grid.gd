@@ -36,8 +36,9 @@ func _ready():
 	set_up_global_vars()
 	set_up_grid_bg()
 	generate_grid()
-	set_up_tiles()
+#changed order of pieces/tiles so custom pieces can check for pieces
 	set_up_pieces()
+	set_up_tiles()
 	center()
 	
 	Global.emit_grid_changed()
@@ -78,6 +79,7 @@ func set_up_tiles() -> void:
 		var pos = tile.position
 		tile.update_colour(grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0].colour)
 		grid_matrix[pos.y/Global.TILE_SIZE][pos.x/Global.TILE_SIZE][0].queue_free()
+		if tile.has_method("_set_up"): tile._set_up()
 		Global.modify_matrix_tile_at_pos(pos, tile)
 		tile.show_debug_info(debug_info)
 

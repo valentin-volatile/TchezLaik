@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk0ys12mby7bq"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_6tqha"]
+[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="2_2gjeb"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="3_qhqqp"]
+
+[node name="Level_6" instance=ExtResource("1_6tqha")]
+moves_amount = 4
+
+[node name="Grid" parent="." index="2"]
+rows = 7
+columns = 7
+
+[node name="PieceKnight" parent="Grid/Pieces" index="0" instance=ExtResource("2_2gjeb")]
+position = Vector2(1280, 512)
+
+[node name="PiecePawn" parent="Grid/Pieces" index="1" instance=ExtResource("3_qhqqp")]
+position = Vector2(768, 0)
+colour = "white"
+
+[node name="GridGuide" parent="Grid" index="2"]
+offset_right = 1792.0
+offset_bottom = 1792.0

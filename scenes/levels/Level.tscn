@@ -1,22 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://dcmlyraojet72"]
+[gd_scene load_steps=8 format=3 uid="uid://dcmlyraojet72"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_tlmcr"]
-[ext_resource type="PackedScene" uid="uid://c12seqnnqdu42" path="res://scenes/LevelUI.tscn" id="2_k3err"]
-[ext_resource type="PackedScene" uid="uid://bpfmlr10l4a3c" path="res://scenes/Background.tscn" id="3_pfp64"]
+[ext_resource type="PackedScene" uid="uid://c12seqnnqdu42" path="res://scenes/ui/LevelUI.tscn" id="2_k3err"]
+[ext_resource type="PackedScene" uid="uid://bpfmlr10l4a3c" path="res://scenes/ui/Background.tscn" id="3_pfp64"]
 [ext_resource type="Script" path="res://scripts/grid.gd" id="4_3ung6"]
 [ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="5_t62qt"]
-[ext_resource type="PackedScene" uid="uid://c2xm1y3ds60w8" path="res://scenes/pieces/PieceQueen.tscn" id="7_rg5y7"]
-[ext_resource type="PackedScene" uid="uid://bxtscrtbaiqta" path="res://scenes/pieces/PieceKing.tscn" id="7_vip0i"]
 [ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="9_6fnj5"]
-[ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="9_nohm1"]
-[ext_resource type="PackedScene" uid="uid://bw6bxn2hh2ink" path="res://scenes/pieces/PieceUFO.tscn" id="10_82ds0"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="10_db16e"]
-[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="11_taovh"]
-[ext_resource type="PackedScene" uid="uid://cdgruyigpftjo" path="res://scenes/tiles/TilePromotion.tscn" id="12_6w6c0"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_tlmcr")
-moves_amount = 6
 
 [node name="LevelUI" parent="." instance=ExtResource("2_k3err")]
 visible = false
@@ -28,8 +21,6 @@ added_dimness = Color(0.0980392, 0.0980392, 0.0980392, 0.392157)
 
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource("4_3ung6")
-rows = 8
-columns = 8
 tile_scene = ExtResource("5_t62qt")
 tile_texture = ExtResource("9_6fnj5")
 bg_colour = Color(0.0955989, 0.00582926, 0.108098, 1)
@@ -38,38 +29,8 @@ bg_margin = 15
 [node name="Pieces" type="Node2D" parent="Grid"]
 z_index = 10
 
-[node name="PieceKing" parent="Grid/Pieces" instance=ExtResource("7_vip0i")]
-position = Vector2(768, 768)
-colour = null
-capture_reach = null
-moves_when_capturing = null
-can_jump_over_obstacles = null
-stops_movement = null
-colour_affects_movement = null
-
-[node name="PieceUFO" parent="Grid/Pieces" instance=ExtResource("10_82ds0")]
-position = Vector2(768, 0)
-
-[node name="PieceQueen" parent="Grid/Pieces" instance=ExtResource("7_rg5y7")]
-position = Vector2(256, 0)
-colour = "white"
-
-[node name="PieceKnight" parent="Grid/Pieces" instance=ExtResource("9_nohm1")]
-position = Vector2(512, 512)
-colour = "white"
-
-[node name="PiecePawn" parent="Grid/Pieces" instance=ExtResource("11_taovh")]
-position = Vector2(256, 256)
-
-[node name="PiecePawn2" parent="Grid/Pieces" instance=ExtResource("11_taovh")]
-position = Vector2(256, 768)
-colour = "white"
-
 [node name="Tiles" type="Node2D" parent="Grid"]
 z_index = 5
-
-[node name="TilePromotion" parent="Grid/Tiles" instance=ExtResource("12_6w6c0")]
-position = Vector2(768, 256)
 
 [node name="GridGuide" type="TextureRect" parent="Grid"]
 self_modulate = Color(0, 0, 0, 1)

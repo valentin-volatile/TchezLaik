@@ -29,9 +29,7 @@ func _update_valid_moves() -> void:
 			move_tiles.append(new_pos)
 
 
-func _update_valid_captures() -> void:
-	#if not Global.grid_matrix: return #avoid crash, as pieces are set up before the grid
-	
+func _update_valid_captures() -> void:	
 	capture_tiles = []
 	
 	for row in Global.grid_rows:
@@ -40,7 +38,7 @@ func _update_valid_captures() -> void:
 			
 			if (new_pos == position): continue
 			
-			#if not Global.is_in_grid(new_pos): break
+			if not Global.is_in_grid(new_pos): break
 			
 			var piece = Global.get_piece_at_pos(new_pos)
 			

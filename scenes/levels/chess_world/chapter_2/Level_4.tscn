@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://h7a15r4372od"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_s3twu"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="2_ls3a4"]
+[ext_resource type="PackedScene" uid="uid://cdgruyigpftjo" path="res://scenes/tiles/TilePromotion.tscn" id="3_6dqtj"]
+[ext_resource type="PackedScene" uid="uid://c2xm1y3ds60w8" path="res://scenes/pieces/PieceQueen.tscn" id="4_ehv05"]
+
+[node name="Level_4" instance=ExtResource("1_s3twu")]
+moves_amount = 2
+
+[node name="Grid" parent="." index="2"]
+rows = 4
+
+[node name="PiecePawn" parent="Grid/Pieces" index="0" instance=ExtResource("2_ls3a4")]
+position = Vector2(512, 768)
+
+[node name="PiecePawn2" parent="Grid/Pieces" index="1" instance=ExtResource("2_ls3a4")]
+position = Vector2(512, 256)
+colour = "white"
+
+[node name="TilePromotion" parent="Grid/Tiles" index="0" instance=ExtResource("3_6dqtj")]
+position = Vector2(512, 0)
+piece_path = ExtResource("4_ehv05")

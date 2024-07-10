@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgxgwljg1c2ne"]
+
+[ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_f8mja"]
+[ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="2_0j10q"]
+[ext_resource type="PackedScene" uid="uid://d2rhr11sfajvb" path="res://scenes/pieces/PiecePawn.tscn" id="3_hvs71"]
+[ext_resource type="PackedScene" uid="uid://cdgruyigpftjo" path="res://scenes/tiles/TilePromotion.tscn" id="4_rebg6"]
+[ext_resource type="PackedScene" uid="uid://pdvs3j7qov1v" path="res://scenes/pieces/PieceRook.tscn" id="5_4a0wa"]
+
+[node name="Level_5" instance=ExtResource("1_f8mja")]
+moves_amount = 3
+
+[node name="Grid" parent="." index="2"]
+rows = 4
+columns = 4
+
+[node name="PieceBishop" parent="Grid/Pieces" index="0" instance=ExtResource("2_0j10q")]
+position = Vector2(256, 256)
+colour = "white"
+
+[node name="PiecePawn" parent="Grid/Pieces" index="1" instance=ExtResource("3_hvs71")]
+position = Vector2(768, 768)
+colour = "white"
+
+[node name="PiecePawn2" parent="Grid/Pieces" index="2" instance=ExtResource("3_hvs71")]
+position = Vector2(0, 768)
+
+[node name="TilePromotion" parent="Grid/Tiles" index="0" instance=ExtResource("4_rebg6")]
+piece_path = ExtResource("5_4a0wa")
