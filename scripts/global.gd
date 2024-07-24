@@ -52,7 +52,7 @@ func get_pieces(colour: String = "") -> Array:
 	return pieces_array.filter(func(piece): return piece.alive)
 
 
-func get_attacked_pos(piece: Piece) -> Array:
+func get_attacked_pos(piece: Piece, ignored_pieces: Array[Piece] = []) -> Array:
 	var enemy_pieces = get_pieces()
 	var attacked_pos = []
 	
@@ -61,6 +61,7 @@ func get_attacked_pos(piece: Piece) -> Array:
 	
 	for enemy_piece in enemy_pieces:
 		if enemy_piece.colour == piece.colour: continue
+		if enemy_piece in ignored_pieces: continue
 		
 		if enemy_piece is SafePiece: 
 			attacked_pos += enemy_piece._get_safe_piece_checked_tiles()
@@ -86,6 +87,7 @@ func is_in_grid(pos: Vector2i) -> bool:
 	if y < 0 or x < 0: return false
 	if y >= grid_rows or x >= grid_columns: return false
 	return true
+
 
 func get_info_at_pos(pos: Vector2i):
 	return grid_matrix[pos.y/TILE_SIZE][pos.x/TILE_SIZE]

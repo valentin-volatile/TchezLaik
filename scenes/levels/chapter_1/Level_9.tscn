@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="3_e8y5r"]
 
 [node name="Level_9" instance=ExtResource("1_83uou")]
-moves_amount = 7
+moves_amount = 5
 
 [node name="PieceKing" parent="Grid/Pieces" index="0" instance=ExtResource("2_cbetl")]
 position = Vector2(768, 768)

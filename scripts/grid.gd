@@ -126,6 +126,7 @@ func set_up_grid_bg() -> void:
 
 
 func set_up_global_vars() -> void:
+	Global.reset_vars()
 	Global.grid_node = self
 	Global.grid_matrix = grid_matrix
 	Global.grid_rows = rows

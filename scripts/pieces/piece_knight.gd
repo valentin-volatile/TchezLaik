@@ -30,7 +30,7 @@ func _update_valid_captures() -> void:
 		if not Global.is_in_grid(new_pos): continue
 		var piece = Global.get_piece_at_pos(new_pos)
 		
-		if piece and piece.colour != colour:
+		if piece and can_capture(piece):
 			capture_tiles.append(new_pos)
 		
 		checked_tiles.append(new_pos)

@@ -22,6 +22,7 @@ func update_valid_tiles() -> void:
 	var move_tiles_copy = move_tiles.duplicate()
 	var checked_tiles_copy = checked_tiles.duplicate()
 	
+# get rid of any position that would leave the piece vulnerable to an enemy attack
 	for possible_move in capture_tiles_copy:
 		if possible_move in attack_tiles: capture_tiles.erase(possible_move)
 	
@@ -30,3 +31,12 @@ func update_valid_tiles() -> void:
 	
 	for possible_move in checked_tiles_copy:
 		if possible_move in attack_tiles: checked_tiles.erase(possible_move)
+		
+# now check if the piece would be in check after changing colour, if so delete that move
+	capture_tiles_copy = capture_tiles.duplicate()
+	
+	for possible_capture in capture_tiles_copy:
+		var current_piece: Piece = Global.get_piece_at_pos(possible_capture)
+		
+		if possible_capture in Global.get_attacked_pos(current_piece, [self]):
+			capture_tiles.erase(possible_capture)

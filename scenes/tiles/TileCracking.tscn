@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://n1pb4e3coonw"]
+
+[ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="1_14dqm"]
+[ext_resource type="Script" path="res://scripts/tiles/tile_cracking.gd" id="2_b6qe5"]
+[ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="3_xxtn3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8pa6j"]
+resource_local_to_scene = true
+size = Vector2(256, 256)
+
+[node name="TileCracking" instance=ExtResource("1_14dqm")]
+script = ExtResource("2_b6qe5")
+activates_on_step_on = false
+activates_on_step_off = true
+activation_amount = 1
+
+[node name="CustomSprite" type="Sprite2D" parent="." index="1"]
+modulate = Color(0.47425, 0.693781, 0.403535, 1)
+position = Vector2(128, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_xxtn3")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_8pa6j")

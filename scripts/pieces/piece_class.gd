@@ -10,12 +10,16 @@ signal was_clicked(piece: Piece)
 
 #suppose it moves along the whole axis and captures the same way, use it for pieces
 # that don't work that way
+@export_group("Movement")
 @export var move_reach: int 
 @export var capture_reach: int
 @export var moves_when_capturing: bool = true
 @export var can_jump_over_obstacles: bool = false
+#whether other pieces will consider this piece as blocking their movement
 @export var stops_movement: bool = true
 @export var colour_affects_movement: bool = false
+@export_group("")
+
 
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_pivot = $Pivot
@@ -42,12 +46,16 @@ var move_time := 0.45 #0.3
 var move_rotation = 5
 var being_tweened := false
 
+var allowed_colour_captures: Dictionary = {
+	"white" = ["black"],
+	"black" = ["white"],
+}
+
 
 func _ready():
 	sprite_pivot.visible = false
 	set_colour(colour, false)
 	_set_up_directions()
-	#Global.grid_changed.connect(update_valid_tiles)
 
 
 func _on_area_2d_input_event(_viewport, _event, _shape_idx):
@@ -140,7 +148,7 @@ func disappear() -> void:
 
 func capture(piece: Piece) -> void:
 	if moves_when_capturing:
-		play_audio("capture", move_time-0.05)
+		play_audio("capture", move_time-0.05) #magic number
 		move(piece.position, false)
 	
 	Global.emit_grid_changed()
@@ -150,7 +158,6 @@ func capture(piece: Piece) -> void:
 
 func move(pos: Vector2, play_sound: bool = true) -> void:
 	selectable = false
-	being_tweened = true
 
 	Global.modify_matrix_piece_at_pos(position, null)
 	Global.modify_matrix_piece_at_pos(pos, self)
@@ -161,9 +168,9 @@ func move(pos: Vector2, play_sound: bool = true) -> void:
 	
 	Global.emit_grid_changed()
 	finished_animation.emit()
-	
 
 func play_move_animation(pos: Vector2, play_sound: bool = true) -> void:
+	being_tweened = true
 	sprite_pivot.scale = Vector2(0.75, 0.75)
 	rotation_degrees = 0 if (position.x == pos.x) else -move_rotation * sign(position.x-pos.x) 
 	
@@ -237,12 +244,16 @@ func _update_valid_captures() -> void:
 				checked_tiles.append(new_pos)
 				continue
 			
-			if piece.colour != colour:
+			if can_capture(piece):
 				capture_tiles.append(new_pos)
 
 			checked_tiles.append(new_pos)
 			break
 
+
+func can_capture(piece: Piece) -> bool:
+	if piece.colour in allowed_colour_captures[colour]: return true
+	return false
 
 
 func is_valid_move(pos: Vector2) -> bool:
@@ -269,6 +280,6 @@ func _on_capturing(piece_captured: Piece) -> void:
 	set_colour(piece_captured.colour)
 
 
-func _on_being_captured(piece_captured_by: Piece) -> void:
+func _on_being_captured(_piece_captured_by: Piece) -> void:
 	alive = false
 	disappear()

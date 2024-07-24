@@ -35,9 +35,6 @@ func _process(_delta):
 func process_input() -> void:
 	if Input.is_action_just_pressed("right_click"):
 		set_selected_piece(null)
-		
-	if Input.is_action_just_pressed("restart"): 
-		restart_level()
 
 
 func set_selected_piece(piece: Piece) -> void:
@@ -107,7 +104,6 @@ func on_piece_click(piece: Piece) -> void:
 func on_tile_click(tile: Tile) -> void:
 	if not can_play: return
 	if not moves_amount: return
-	
 	if not selected_piece: return
 	
 	#if there's a piece in the tile, let the piece handle the input
@@ -115,10 +111,13 @@ func on_tile_click(tile: Tile) -> void:
 	
 	if (tile.position in selected_piece.move_tiles):
 		var current_piece = selected_piece
-		set_selected_piece(null)
-		current_piece.move(tile.position)
-		Global.emit_piece_moved(current_piece)
+		can_play = false
 		update_move_counter(-1)
+		set_selected_piece(null)
+		await current_piece.move(tile.position)
+		can_play = true
+		Global.emit_piece_moved(current_piece)
+		
 		return
 	
 	if not (tile.position in selected_piece.move_tiles): 
@@ -156,13 +155,3 @@ func check_if_won(_piece: Piece):
 	var pieces_left = Global.pieces.filter(func(piece): return piece.alive)
 	if (pieces_left.size() > 1): return
 	print("omg yu guon")
-
-
-func restart_level() -> void:
-	#weird artifact n crash if spammed
-	#show_pieces(false)
-	#await self.finished
-	#await get_tree().create_timer(0.50).timeout
-	Global.reset_vars()
-	get_tree().reload_current_scene()
-

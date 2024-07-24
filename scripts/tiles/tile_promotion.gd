@@ -2,8 +2,9 @@ extends TileOnStep
 
 @export var piece_path: PackedScene
 
+
 func _on_step(trigger_piece: Piece) -> void:
-	await trigger_piece.finished_animation
+	#await trigger_piece.finished_animation
 	
 	var new_piece: Piece = piece_path.instantiate()
 	
@@ -11,7 +12,7 @@ func _on_step(trigger_piece: Piece) -> void:
 	
 	trigger_piece.disappear()
 	await trigger_piece.finished_animation
+	print("REACHED")
 	
 	Global.grid_node.add_piece(new_piece)
 	new_piece.set_colour(trigger_piece.colour)
-

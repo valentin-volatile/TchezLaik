@@ -15,9 +15,7 @@ func _update_valid_moves() -> void:
 	if not Global.grid_matrix: return #avoid crash, as pieces are set up before the grid
 	
 	move_tiles = []
-	
-	var attacked_tiles = Global.get_attacked_pos(self)
-	
+
 	for row in Global.grid_rows:
 		for column in Global.grid_columns:
 			var new_pos = Vector2(Global.TILE_SIZE*row, Global.TILE_SIZE*column)
@@ -46,7 +44,7 @@ func _update_valid_captures() -> void:
 				checked_tiles.append(new_pos)
 				continue
 			
-			if piece.colour != colour:
+			if can_capture(piece):
 				capture_tiles.append(new_pos)
 			else:
 				checked_tiles.append(new_pos)
