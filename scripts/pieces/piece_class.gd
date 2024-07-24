@@ -238,6 +238,9 @@ func _update_valid_captures() -> void:
 			
 			if not Global.is_in_grid(new_pos): break
 			
+			if moves_when_capturing and (not can_jump_over_obstacles):
+				if (Global.get_tile_at_pos(new_pos).stops_movement): break
+			
 			var piece = Global.get_piece_at_pos(new_pos)
 			
 			if not piece: 
@@ -266,7 +269,7 @@ func is_valid_move(pos: Vector2) -> bool:
 	
 	var pos_contents = Global.get_info_at_pos(pos)
 	
-	if (pos_contents[0].stops_movement) and not can_jump_over_obstacles:
+	if (pos_contents[0].stops_movement):
 		return false
 	
 	if (pos_contents[1] and pos_contents[1].stops_movement):

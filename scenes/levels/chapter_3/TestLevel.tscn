@@ -22,6 +22,7 @@ position = Vector2(512, 0)
 
 [node name="PieceUFO" parent="Grid/Pieces" index="3" instance=ExtResource("5_eaybi")]
 position = Vector2(0, 768)
+can_jump_over_obstacles = false
 
 [node name="TileColourMixer" parent="Grid/Tiles" index="0" instance=ExtResource("6_k1vvt")]
 position = Vector2(256, 0)

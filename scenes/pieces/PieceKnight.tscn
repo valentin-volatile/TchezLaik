@@ -13,6 +13,7 @@ size = Vector2(256, 256)
 [node name="PieceKnight" instance=ExtResource("1_1ta74")]
 script = ExtResource("2_yx7hh")
 piece_name = "knight"
+can_jump_over_obstacles = true
 
 [node name="Light" parent="Pivot" index="0"]
 texture = ExtResource("3_uys8h")
