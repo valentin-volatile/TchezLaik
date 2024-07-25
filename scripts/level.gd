@@ -1,7 +1,7 @@
 extends Node2D
 class_name Level
 
-#signal finished
+signal solved
 
 @export var moves_amount: int
 
@@ -154,4 +154,5 @@ func update_move_counter(amount: int) -> void:
 func check_if_won(_piece: Piece):
 	var pieces_left = Global.pieces.filter(func(piece): return piece.alive)
 	if (pieces_left.size() > 1): return
-	SaverLoader.set_solved(name, true)
+	
+	solved.emit()

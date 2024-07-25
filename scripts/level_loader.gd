@@ -24,18 +24,6 @@ func _process(_delta):
 		restart_level()
 
 
-#func populate_level_data() -> void:
-	#var dir_path = "res://scenes/levels/chapter_2/"
-	#var dir = DirAccess.open(dir_path)
-	#
-	#dir.list_dir_begin()
-	#var file_name = dir.get_next()
-	#
-	#while file_name:
-		#level_data.append(dir_path + file_name)
-		#file_name = dir.get_next()
-
-
 func load_level(level_path: String) -> void:
 	var new_level = load(level_path)
 	new_level = new_level.instantiate()
@@ -45,10 +33,11 @@ func load_level(level_path: String) -> void:
 		
 	add_child(new_level)
 	current_level = new_level
-
+	current_level.solved.connect(set_solved)
+	
 
 func restart_level() -> void: 
-	load_level(current_level_str)
+	load_level(current_chapter_str + "/" + current_level_str)
 
 
 func previous_level() -> void:
@@ -56,8 +45,8 @@ func previous_level() -> void:
 	
 	if new_index >= 0:
 		current_level_index = new_index
-		current_level_str = level_data[current_chapter_str][current_level_index][0]
-		load_level(current_level_str)
+		current_level_str = level_data[current_chapter_str].keys()[current_level_index]
+		load_level(current_chapter_str + "/" + current_level_str)
 	else:
 		print("Already at the first level")
 
@@ -67,7 +56,10 @@ func next_level() -> void:
 	
 	if new_index < level_data[current_chapter_str].size():
 		current_level_index = new_index
-		current_level_str = level_data[current_chapter_str][current_level_index][0]
-		load_level(current_level_str)
+		current_level_str = level_data[current_chapter_str].keys()[current_level_index]
+		load_level(current_chapter_str + "/" + current_level_str)
 	else:
 		print("Already at the last level")
+
+func set_solved() -> void:
+	SaverLoader.update_level_data(current_chapter_str, current_level_str, true)
