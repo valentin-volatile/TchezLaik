@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0umj7lktv31s"]
+
+[ext_resource type="PackedScene" uid="uid://bj2bih23nwha8" path="res://scenes/pieces/PieceTemplate.tscn" id="1_riyty"]
+[ext_resource type="Script" path="res://scripts/pieces/piece_frog.gd" id="2_x7v8i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhdpm"]
+resource_local_to_scene = true
+size = Vector2(256, 256)
+
+[node name="PieceFrog" instance=ExtResource("1_riyty")]
+script = ExtResource("2_x7v8i")
+piece_name = "frog"
+moves_when_capturing = false
+can_jump_over_obstacles = true
+
+[node name="Light" parent="Pivot" index="0"]
+texture = null
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_rhdpm")

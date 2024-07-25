@@ -154,4 +154,4 @@ func update_move_counter(amount: int) -> void:
 func check_if_won(_piece: Piece):
 	var pieces_left = Global.pieces.filter(func(piece): return piece.alive)
 	if (pieces_left.size() > 1): return
-	print("omg yu guon")
+	SaverLoader.set_solved(name, true)

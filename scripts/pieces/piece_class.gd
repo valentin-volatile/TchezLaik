@@ -150,8 +150,10 @@ func capture(piece: Piece) -> void:
 	if moves_when_capturing:
 		play_audio("capture", move_time-0.05) #magic number
 		move(piece.position, false)
+	else:
+		Global.modify_matrix_piece_at_pos(piece.position, null)
+		Global.emit_grid_changed()
 	
-	Global.emit_grid_changed()
 	_on_capturing(piece)
 	piece._on_being_captured(self)
 
@@ -168,6 +170,7 @@ func move(pos: Vector2, play_sound: bool = true) -> void:
 	
 	Global.emit_grid_changed()
 	finished_animation.emit()
+
 
 func play_move_animation(pos: Vector2, play_sound: bool = true) -> void:
 	being_tweened = true

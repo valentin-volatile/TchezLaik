@@ -1,11 +1,15 @@
 extends Node2D
 
+var current_level_str: String = "res://scenes/levels/chapter_1/Level_1.tscn"
+var current_chapter_str: String = "res://scenes/levels/chapter_1"
+
 var current_level: Level
 var current_level_index: int = -1
-var level_array: Array
+var level_data = {}
+
 
 func _ready():
-	populate_level_array()
+	level_data = SaverLoader.level_data
 	next_level()
 
 
@@ -20,17 +24,16 @@ func _process(_delta):
 		restart_level()
 
 
-func populate_level_array() -> void:
-	var dir_path = "res://scenes/levels/chapter_3/"
-	var dir = DirAccess.open(dir_path)
-	
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	
-	while file_name:
-		level_array.append(dir_path + file_name)
-		file_name = dir.get_next()
-	print(level_array)
+#func populate_level_data() -> void:
+	#var dir_path = "res://scenes/levels/chapter_2/"
+	#var dir = DirAccess.open(dir_path)
+	#
+	#dir.list_dir_begin()
+	#var file_name = dir.get_next()
+	#
+	#while file_name:
+		#level_data.append(dir_path + file_name)
+		#file_name = dir.get_next()
 
 
 func load_level(level_path: String) -> void:
@@ -39,12 +42,13 @@ func load_level(level_path: String) -> void:
 	
 	if current_level:
 		current_level.queue_free()
+		
 	add_child(new_level)
 	current_level = new_level
 
 
 func restart_level() -> void: 
-	load_level(level_array[current_level_index])
+	load_level(current_level_str)
 
 
 func previous_level() -> void:
@@ -52,7 +56,8 @@ func previous_level() -> void:
 	
 	if new_index >= 0:
 		current_level_index = new_index
-		load_level(level_array[current_level_index])
+		current_level_str = level_data[current_chapter_str][current_level_index][0]
+		load_level(current_level_str)
 	else:
 		print("Already at the first level")
 
@@ -60,8 +65,9 @@ func previous_level() -> void:
 func next_level() -> void:
 	var new_index = current_level_index + 1
 	
-	if new_index < level_array.size():
+	if new_index < level_data[current_chapter_str].size():
 		current_level_index = new_index
-		load_level(level_array[current_level_index])
+		current_level_str = level_data[current_chapter_str][current_level_index][0]
+		load_level(current_level_str)
 	else:
 		print("Already at the last level")
