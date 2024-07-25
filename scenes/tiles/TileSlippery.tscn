@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://vi7v2dvh22df"]
+
+[ext_resource type="PackedScene" uid="uid://cxmu2x8p5w5id" path="res://scenes/tiles/Tile.tscn" id="1_7nlva"]
+[ext_resource type="Script" path="res://scripts/tiles/tile_slippery.gd" id="2_4up2l"]
+[ext_resource type="Texture2D" uid="uid://7sip6ic0w6og" path="res://sprites/tiles/tile_basic.png" id="2_j2xfl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tryxj"]
+resource_local_to_scene = true
+size = Vector2(256, 256)
+
+[node name="TileSlippery" instance=ExtResource("1_7nlva")]
+script = ExtResource("2_4up2l")
+activates_on_step_on = true
+activates_on_step_off = false
+activation_amount = 99999
+
+[node name="CustomSprite" type="Sprite2D" parent="." index="1"]
+modulate = Color(1.15514e-06, 0.853528, 0.897357, 1)
+position = Vector2(128, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_j2xfl")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_tryxj")

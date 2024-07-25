@@ -15,7 +15,7 @@ activates_on_step_on = true
 activates_on_step_off = false
 activation_amount = 1
 
-[node name="TileBasic" type="Sprite2D" parent="." index="1"]
+[node name="CustomSprite" type="Sprite2D" parent="." index="1"]
 modulate = Color(1, 0.560784, 1, 1)
 position = Vector2(128, 128)
 scale = Vector2(0.5, 0.5)

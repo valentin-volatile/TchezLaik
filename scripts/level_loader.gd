@@ -47,8 +47,6 @@ func previous_level() -> void:
 		current_level_index = new_index
 		current_level_str = level_data[current_chapter_str].keys()[current_level_index]
 		load_level(current_chapter_str + "/" + current_level_str)
-	else:
-		print("Already at the first level")
 
 
 func next_level() -> void:
@@ -58,8 +56,7 @@ func next_level() -> void:
 		current_level_index = new_index
 		current_level_str = level_data[current_chapter_str].keys()[current_level_index]
 		load_level(current_chapter_str + "/" + current_level_str)
-	else:
-		print("Already at the last level")
+
 
 func set_solved() -> void:
 	SaverLoader.update_level_data(current_chapter_str, current_level_str, true)

@@ -35,11 +35,12 @@ var move_directions := []
 var capture_directions := []
 var move_tiles := []
 var capture_tiles := []
-#empty tiles this unit is putting in check (necessary for the ufo and king)
+#tiles this unit is putting in check (necessary for the ufo and king)
 var checked_tiles := []
 var selectable := false
 var is_selected := false
 var alive := true
+var last_pos: Vector2
 
 # for tweening
 var move_time := 0.45 #0.3
@@ -159,6 +160,7 @@ func capture(piece: Piece) -> void:
 
 
 func move(pos: Vector2, play_sound: bool = true) -> void:
+	last_pos = position
 	selectable = false
 
 	Global.modify_matrix_piece_at_pos(position, null)
@@ -258,8 +260,7 @@ func _update_valid_captures() -> void:
 
 
 func can_capture(piece: Piece) -> bool:
-	if piece.colour in allowed_colour_captures[colour]: return true
-	return false
+	return piece.colour in allowed_colour_captures[colour]
 
 
 func is_valid_move(pos: Vector2) -> bool:

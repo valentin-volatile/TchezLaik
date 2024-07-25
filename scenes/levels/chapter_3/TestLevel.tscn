@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dn5qr6gl4g3oe"]
+[gd_scene load_steps=11 format=3 uid="uid://dn5qr6gl4g3oe"]
 
 [ext_resource type="PackedScene" uid="uid://dcmlyraojet72" path="res://scenes/levels/Level.tscn" id="1_exwht"]
 [ext_resource type="PackedScene" uid="uid://c88wnc31apelb" path="res://scenes/pieces/PieceBishop.tscn" id="2_jq86w"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ck2uk6uiyrl2u" path="res://scenes/tiles/TileColourMixer.tscn" id="6_k1vvt"]
 [ext_resource type="PackedScene" uid="uid://dr3rlsnqlic7k" path="res://scenes/pieces/PieceKnight.tscn" id="7_8154l"]
 [ext_resource type="PackedScene" uid="uid://n1pb4e3coonw" path="res://scenes/tiles/TileCracking.tscn" id="7_vqggg"]
+[ext_resource type="PackedScene" uid="uid://vi7v2dvh22df" path="res://scenes/tiles/TileSlippery.tscn" id="8_h6ysr"]
 
 [node name="TestLevel" instance=ExtResource("1_exwht")]
 moves_amount = 100
@@ -27,17 +28,20 @@ position = Vector2(256, 512)
 position = Vector2(512, 0)
 
 [node name="PieceUFO" parent="Grid/Pieces" index="3" instance=ExtResource("5_eaybi")]
-position = Vector2(0, 768)
+position = Vector2(256, 1024)
 
 [node name="PieceFrog" parent="Grid/Pieces" index="4" instance=ExtResource("6_aedxc")]
 position = Vector2(1024, 0)
 colour = "white"
 
 [node name="PieceKnight" parent="Grid/Pieces" index="5" instance=ExtResource("7_8154l")]
-position = Vector2(512, 512)
+position = Vector2(1024, 512)
 
-[node name="TileColourMixer" parent="Grid/Tiles" index="0" instance=ExtResource("6_k1vvt")]
+[node name="TileSlippery" parent="Grid/Tiles" index="0" instance=ExtResource("8_h6ysr")]
+position = Vector2(512, 768)
+
+[node name="TileColourMixer" parent="Grid/Tiles" index="1" instance=ExtResource("6_k1vvt")]
 position = Vector2(256, 0)
 
-[node name="TileCracking" parent="Grid/Tiles" index="1" instance=ExtResource("7_vqggg")]
+[node name="TileCracking" parent="Grid/Tiles" index="2" instance=ExtResource("7_vqggg")]
 position = Vector2(512, 0)
